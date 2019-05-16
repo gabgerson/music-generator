@@ -1,0 +1,362 @@
+{% extends 'base.html' %}
+
+{% block title %} Music Generator {% endblock %}
+
+{% block body %}
+  <form id="pitch-form">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-2" >      
+          <div class="btn-group btn-group-toggle button-margin" data-toggle="buttons">
+      
+            <label class="btn btn-secondary active">
+               <input type="radio" name="pitches-one" id="c3" class="pitches-one"   value="48" autocomplete="off" checked>C3
+             </label>
+             
+             <label class="btn btn-secondary">
+               <input type="radio" name="pitches-one" id="d3" class="pitches-one"  value="50" autocomplete="off">D3
+             </label>
+             
+             <label class="btn btn-secondary">
+               <input type="radio" name="pitches-one" id="e3" class="pitches-one"  value="52" autocomplete="off">E3
+             </label>
+             
+             <label class="btn btn-secondary">
+               <input type="radio" name="pitches-one" id="f3" class="pitches-one"  value="53" autocomplete="off">F3
+             </label>
+             
+             <label class="btn btn-secondary">
+               <input type="radio" name="pitches-one" id="g3" class="pitches-one"  value="55" autocomplete="off">G3
+             </label>
+             
+             <label class="btn btn-secondary">
+               <input type="radio" name="pitches-one" id="a3" class="pitches-one"  value="57" autocomplete="off">A3
+             </label>
+             
+             <label class="btn btn-secondary">
+               <input type="radio" name="pitches-one" id="b3" class="pitches-one"  value="59" autocomplete="off">B3
+             </label>
+             
+             <label class="btn btn-secondary">
+               <input type="radio" name="pitches-one" id="b3" class="pitches-one"  value="60" autocomplete="off">C4
+             </label>
+           </div> 
+        </div>
+      </div>
+    </div> 
+    
+    
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-2" >      
+          <div class="btn-group btn-group-toggle" data-toggle="buttons">
+      
+            <label class="btn btn-secondary active">
+               <input type="radio" name="pitches-two" id="c3" class="pitches-two"  value="48" autocomplete="off" checked>C3
+             </label>
+             
+             <label class="btn btn-secondary">
+               <input type="radio" name="pitches-two" id="d3" class="pitches-two" value="50" autocomplete="off">D3
+             </label>
+             
+             <label class="btn btn-secondary">
+               <input type="radio" name="pitches-two" id="e3" class="pitches-two" value="52" autocomplete="off">E3
+             </label>
+             
+             <label class="btn btn-secondary">
+               <input type="radio" name="pitches-two" id="f3" class="pitches-two" value="53" autocomplete="off">F3
+             </label>
+             
+             <label class="btn btn-secondary">
+               <input type="radio" name="pitches-two" id="g3" class="pitches-two" value="55" autocomplete="off">G3
+             </label>
+             
+             <label class="btn btn-secondary">
+               <input type="radio" name="pitches-two" id="a3" class="pitches-two" value="57" autocomplete="off">A3
+             </label>
+             
+             <label class="btn btn-secondary">
+               <input type="radio" name="pitches-two" id="b3" class="pitches-two" value="59" autocomplete="off">B3
+             </label>
+             
+             <label class="btn btn-secondary">
+               <input type="radio" name="pitches-two" id="b3" class="pitches-two" value="60" autocomplete="off">C4
+             </label>
+          </div> 
+        </div>
+      </div>
+    </div>
+
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-2" >      
+          <div class="btn-group btn-group-toggle" data-toggle="buttons">
+      
+            <label class="btn btn-secondary active">
+               <input type="radio" name="pitches-three" id="c3" class="pitches-three"  value="48" autocomplete="off" checked>C3
+             </label>
+             
+             <label class="btn btn-secondary">
+               <input type="radio" name="pitches-three" id="d3" class="pitches-three" value="50" autocomplete="off">D3
+             </label>
+             
+             <label class="btn btn-secondary">
+               <input type="radio" name="pitches-three" id="e3" class="pitches-three" value="52" autocomplete="off">E3
+             </label>
+             
+             <label class="btn btn-secondary">
+               <input type="radio" name="pitches-three" id="f3" class="pitches-three" value="53" autocomplete="off">F3
+             </label>
+             
+             <label class="btn btn-secondary">
+               <input type="radio" name="pitches-three" id="g3" class="pitches-three" value="55" autocomplete="off">G3
+             </label>
+             
+             <label class="btn btn-secondary">
+               <input type="radio" name="pitches-three" id="a3" class="pitches-three" value="57" autocomplete="off">A3
+             </label>
+             
+             <label class="btn btn-secondary">
+               <input type="radio" name="pitches-three" id="b3" class="pitches-three" value="59" autocomplete="off">B3
+             </label>
+             
+             <label class="btn btn-secondary">
+               <input type="radio" name="pitches-three" id="b3" class="pitches-three" value="60" autocomplete="off">C4
+             </label>
+          </div> 
+        </div>
+      </div>
+    </div>
+
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-2" >      
+          <div class="btn-group btn-group-toggle" data-toggle="buttons">
+      
+            <label class="btn btn-secondary active">
+               <input type="radio" name="pitches-four" id="c3"  class="pitches-four" value="48" autocomplete="off" checked>C3
+             </label>
+             
+             <label class="btn btn-secondary">
+               <input type="radio" name="pitches-four" id="d3"  class="pitches-four"value="50" autocomplete="off">D3
+             </label>
+             
+             <label class="btn btn-secondary">
+               <input type="radio" name="pitches-four" id="e3"  class="pitches-four"value="52" autocomplete="off">E3
+             </label>
+             
+             <label class="btn btn-secondary">
+               <input type="radio" name="pitches-four" id="f3"  class="pitches-four"value="53" autocomplete="off">F3
+             </label>
+             
+             <label class="btn btn-secondary">
+               <input type="radio" name="pitches-four" id="g3"  class="pitches-four"value="55" autocomplete="off">G3
+             </label>
+             
+             <label class="btn btn-secondary">
+               <input type="radio" name="pitches-four" id="a3"  class="pitches-four"value="57" autocomplete="off">A3
+             </label>
+             
+             <label class="btn btn-secondary">
+               <input type="radio" name="pitches-four" id="b3"  class="pitches-four"value="59" autocomplete="off">B3
+             </label>
+             
+             <label class="btn btn-secondary">
+               <input type="radio" name="pitches-four" id="b3"  class="pitches-four"value="60" autocomplete="off">C4
+             </label>
+          </div> 
+        </div>
+      </div>
+    </div>
+
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-2" >      
+          <div class="btn-group btn-group-toggle" data-toggle="buttons">
+      
+            <label class="btn btn-secondary active">
+               <input type="radio" name="pitches-five" id="c3" class="pitches-five"  value="48" autocomplete="off" checked>C3
+             </label>
+             
+             <label class="btn btn-secondary">
+               <input type="radio" name="pitches-five" id="d3" class="pitches-five" value="50" autocomplete="off">D3
+             </label>
+             
+             <label class="btn btn-secondary">
+               <input type="radio" name="pitches-five" id="e3" class="pitches-five" value="52" autocomplete="off">E3
+             </label>
+             
+             <label class="btn btn-secondary">
+               <input type="radio" name="pitches-five" id="f3" class="pitches-five" value="53" autocomplete="off">F3
+             </label>
+             
+             <label class="btn btn-secondary">
+               <input type="radio" name="pitches-five" id="g3" class="pitches-five" value="55" autocomplete="off">G3
+             </label>
+             
+             <label class="btn btn-secondary">
+               <input type="radio" name="pitches-five" id="a3" class="pitches-five" value="57" autocomplete="off">A3
+             </label>
+             
+             <label class="btn btn-secondary">
+               <input type="radio" name="pitches-five" id="b3" class="pitches-five" value="59" autocomplete="off">B3
+             </label>
+             
+             <label class="btn btn-secondary">
+               <input type="radio" name="pitches-five" id="b3" class="pitches-five" value="60" autocomplete="off">C4
+             </label>
+          </div> 
+        </div>
+      </div>
+    </div>
+
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-2" >      
+          <div class="btn-group btn-group-toggle" data-toggle="buttons">
+      
+            <label class="btn btn-secondary active">
+               <input type="radio" name="pitches-six" id="c3" class="pitches-six"  value="48" autocomplete="off" checked>C3
+             </label>
+             
+             <label class="btn btn-secondary">
+               <input type="radio" name="pitches-six" id="d3" class="pitches-six" value="50" autocomplete="off">D3
+             </label>
+             
+             <label class="btn btn-secondary">
+               <input type="radio" name="pitches-six" id="e3" class="pitches-six" value="52" autocomplete="off">E3
+             </label>
+             
+             <label class="btn btn-secondary">
+               <input type="radio" name="pitches-six" id="f3" class="pitches-six" value="53" autocomplete="off">F3
+             </label>
+             
+             <label class="btn btn-secondary">
+               <input type="radio" name="pitches-six" id="g3" class="pitches-six" value="55" autocomplete="off">G3
+             </label>
+             
+             <label class="btn btn-secondary">
+               <input type="radio" name="pitches-six" id="a3" class="pitches-six" value="57" autocomplete="off">A3
+             </label>
+             
+             <label class="btn btn-secondary">
+               <input type="radio" name="pitches-six" id="b3" class="pitches-six" value="59" autocomplete="off">B3
+             </label>
+             
+             <label class="btn btn-secondary">
+               <input type="radio" name="pitches-six" id="b3" class="pitches-six" value="60" autocomplete="off">C4
+             </label>
+          </div> 
+        </div>
+      </div>
+    </div>
+
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-2" >      
+          <div class="btn-group btn-group-toggle" data-toggle="buttons">
+      
+            <label class="btn btn-secondary active">
+               <input type="radio" name="pitches-sev" id="c3" class="pitches-sev"  value="48" autocomplete="off" checked>C3
+             </label>
+             
+             <label class="btn btn-secondary">
+               <input type="radio" name="pitches-sev" id="d3" class="pitches-sev" value="50" autocomplete="off">D3
+             </label>
+             
+             <label class="btn btn-secondary">
+               <input type="radio" name="pitches-sev" id="e3" class="pitches-sev" value="52" autocomplete="off">E3
+             </label>
+             
+             <label class="btn btn-secondary">
+               <input type="radio" name="pitches-sev" id="f3" class="pitches-sev" value="53" autocomplete="off">F3
+             </label>
+             
+             <label class="btn btn-secondary">
+               <input type="radio" name="pitches-sev" id="g3" class="pitches-sev" value="55" autocomplete="off">G3
+             </label>
+             
+             <label class="btn btn-secondary">
+               <input type="radio" name="pitches-sev" id="a3" class="pitches-sev" value="57" autocomplete="off">A3
+             </label>
+             
+             <label class="btn btn-secondary">
+               <input type="radio" name="pitches-sev" id="b3" class="pitches-sev" value="59" autocomplete="off">B3
+             </label>
+             
+             <label class="btn btn-secondary">
+               <input type="radio" name="pitches-sev" id="b3" class="pitches-sev" value="60" autocomplete="off">C4
+             </label>
+          </div> 
+        </div>
+      </div>
+    </div>
+
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-2" >      
+          <div class="btn-group btn-group-toggle" data-toggle="buttons">
+      
+            <label class="btn btn-secondary active">
+               <input type="radio" name="pitches-eight" id="c3" class="pitches-eight"  value="48" autocomplete="off" checked>C3
+             </label>
+             
+             <label class="btn btn-secondary">
+               <input type="radio" name="pitches-eight" id="d3" class="pitches-eight" value="50" autocomplete="off">D3
+             </label>
+             
+             <label class="btn btn-secondary">
+               <input type="radio" name="pitches-eight" id="e3" class="pitches-eight" value="52" autocomplete="off">E3
+             </label>
+             
+             <label class="btn btn-secondary">
+               <input type="radio" name="pitches-eight" id="f3" class="pitches-eight" value="53" autocomplete="off">F3
+             </label>
+             
+             <label class="btn btn-secondary">
+               <input type="radio" name="pitches-eight" id="g3" class="pitches-eight" value="55" autocomplete="off">G3
+             </label>
+             
+             <label class="btn btn-secondary">
+               <input type="radio" name="pitches-eight" id="a3" class="pitches-eight" value="57" autocomplete="off">A3
+             </label>
+             
+             <label class="btn btn-secondary">
+               <input type="radio" name="pitches-eight" id="b3" class="pitches-eight" value="59" autocomplete="off">B3
+             </label>
+             
+             <label class="btn btn-secondary">
+               <input type="radio" name="pitches-eight" id="b3" class="pitches-eight" value="60" autocomplete="off">C4
+             </label>
+          </div> 
+        </div>
+      </div>
+    </div>
+   <button type="submit">Submit</button> 
+  </form>
+
+  
+
+  
+  <div id="show-pitches"></div>
+
+  <div class="container-fluid">
+    <div id="basic-buttons">
+        <button id="play-button" type="button" class="btn-primary"><i class="fas fa-play-circle"></i> Play</button>
+        <button id="stop-button" type="button" class="btn-danger"><i class="fas fa-stop-circle"></i> Stop</button>
+        <button id="pause-button" type="button" class="btn-warning"><i class="fas fa-pause"></i> Pause</button>
+        <button id="ai-play" type="button" class="btn-success"><i class="fas fa-redo"></i> Generate Melody</button>
+        <button id="ai-stop" type="button" class="btn-danger"><i class="fas fa-stop-circle"></i> Stop Ai</button>
+        <button id="ai-pause" type="button" class="btn-warning"><i class="fas fa-pause"></i> Pause Ai</button>
+    </div>
+  </div>
+
+
+
+{% endblock %}

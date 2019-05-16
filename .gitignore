@@ -3,3 +3,5 @@ trial.html
 demo.js
 __pycache__
 *.pyc
+test.html
+.DS_Store
