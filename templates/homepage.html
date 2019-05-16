@@ -2,6 +2,14 @@
 
 {% block title %} Music Generator {% endblock %}
 
+
+{% block js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"></script>
+<script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+{% endblock %}
+
+
 {% block body %}
   <form id="pitch-form">
     <div class="container-fluid">
@@ -346,12 +354,16 @@
   
   <div id="show-pitches"></div>
 
+  <canvas id="piano-roll"></canvas>
+  <div class="container-fluid">
+    <div id="current-pitchs-selection"></div>
+  </div>
   <div class="container-fluid">
     <div id="basic-buttons">
-        <button id="play-button" type="button" class="btn-primary"><i class="fas fa-play-circle"></i> Play</button>
+        <button id="play-button" type="button" onclick="playStop()" class="btn-primary"><i class="fas fa-play-circle"></i> Play</button>
         <button id="stop-button" type="button" class="btn-danger"><i class="fas fa-stop-circle"></i> Stop</button>
         <button id="pause-button" type="button" class="btn-warning"><i class="fas fa-pause"></i> Pause</button>
-        <button id="ai-play" type="button" class="btn-success"><i class="fas fa-redo"></i> Generate Melody</button>
+        <button id="ai-play" type="button" onclick="musicone()"" class ="btn-success"><i class="fas fa-redo"></i> Generate Melody</button>
         <button id="ai-stop" type="button" class="btn-danger"><i class="fas fa-stop-circle"></i> Stop Ai</button>
         <button id="ai-pause" type="button" class="btn-warning"><i class="fas fa-pause"></i> Pause Ai</button>
     </div>

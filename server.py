@@ -29,7 +29,7 @@ def user_melody():
     pitch_sev = request.form.get("pitches-sev")
     pitch_eight = request.form.get("pitches-eight")
 
-    #test if getting pitches
+    #format user melody
     user_melody = {
         "notes": 
          [{"pitch": pitch_one, "startTime": 0.0, "endTime": 1.0},
@@ -43,9 +43,9 @@ def user_melody():
 
          ], "totalTime": 8}
 
-
+    
     return jsonify(user_melody)
-    # return render_template("test.html", user_melody=user_melody)
+    
    
 
 
