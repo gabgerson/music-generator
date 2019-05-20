@@ -51,7 +51,7 @@ const vizPlayer = new mm.Player(false, {
     run: (note) => viz.redraw(note),
     stop: () => {console.log('done');}
   });
-
+  ;
   
 //replace seed canvas piano roll with user melody piano canvas roll   
 function playStop(evt){
@@ -68,23 +68,28 @@ function playStop(evt){
 
 const musicAi = new mm.MusicRNN('https://storage.googleapis.com/magentadata/js/checkpoints/music_rnn/basic_rnn');
   
-let rnn_steps = 20;
-let rnn_temperature = 1.5;
+let rnn_steps = 100;
+let rnn_temperature = 3;
 
 const musicAiPlayer = new mm.Player();
 
 function musicone() {
    let qns;
+   let sCheck;
     if (user_melody===undefined) {
    
          qns = mm.sequences.quantizeNoteSequence(seed, 4);
+         console.log("using seed")
+          sCheck="seed"
     }else {
         qns = mm.sequences.quantizeNoteSequence(user_melody, 4);
+        console.log("using user_melody")
+         sCheck="userM"
     }
 musicAi.continueSequence(qns, rnn_steps, rnn_temperature).then((sample) => {
 // sam = sample;
 // const aiViz = new mm.PianoRollCanvasVisualizer(sample, canvasTwo);
-  
+  console.log(sCheck)
 // console.log(sam)
 musicAiPlayer.start(sample)});
 }

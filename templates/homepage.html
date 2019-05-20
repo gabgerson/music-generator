@@ -7,12 +7,17 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"></script>
 <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
 <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reactstrap/4.8.0/reactstrap.min.js
+"></script>
+<script src="static/js/currentNote.jsx" type="text/babel" ></script>
+
+
 {% endblock %}
 
 
 {% block body %}
   <form id="pitch-form">
-    <div class="container-fluid">
+    <!-- <div class="container-fluid">
       <div class="row">
         <div class="col-sm-2" >      
           <div class="btn-group btn-group-toggle button-margin" data-toggle="buttons">
@@ -345,14 +350,28 @@
           </div> 
         </div>
       </div>
-    </div>
+    </div> -->
+    <div id="show-pitches"></div>
    <button type="submit">Submit</button> 
   </form>
 
   
 
   
-  <div id="show-pitches"></div>
+  
+  <div id="current-notes">
+    |<span id="one">♩</span>|
+    <span id="two">♩</span>|
+    <span id="three">♩</span>|
+    <span id="four">♩</span>|
+    <span id="five">♩</span>|
+    <span id="six">♩</span>|
+    <span id="sev">♩</span>|
+    <span id="eight">♩</span>|
+  </div>
+  <div id="test-notes"></div>
+
+
 
   <canvas id="piano-roll"></canvas>
   <div class="container-fluid">
