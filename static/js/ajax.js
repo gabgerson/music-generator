@@ -26,9 +26,35 @@ function testResult(evt) {
                              )}
                                                     
 
+// $('#pitch-form').on('submit',getPitches);
+
+// function getPitches(evt){
+//     evt.preventDefault();
+//     let pOne = $("input[name='pitches-one']:checked").val();
+//     let pTwo =  $("input[name='pitches-two']:checked").val();
+//     let pThree = $("input[name='pitches-three']:checked").val();
+//     let pFour = $("input[name='pitches-four']:checked").val();
+//     let pFive = $("input[name='pitches-five']:checked").val();
+//     let pSix = $("input[name='pitches-six']:checked").val();
+//     let pSev = $("input[name='pitches-sev']:checked").val();
+//     let pEight = $("input[name='pitches-eight']:checked").val();
+
+//   user_melody = {notes:[
+//       {pitch: pOne, startTime:0.0, endTime:1},
+//       {pitch: pTwo, startTime:1.0, endTime:2},
+//       {pitch: pThree, startTime:2.0, endTime:3},
+//       {pitch: pFour, startTime:3.0, endTime:4},
+//       {pitch: pFive, startTime:4.0, endTime:5},
+//       {pitch: pSix, startTime:5.0, endTime:6},
+//       {pitch: pSev, startTime:6.0, endTime:7},
+//       {pitch: pEight, startTime:7.0, endTime:8}],
+//       totalTime:8}
+
+//     console.log(user_melody)
+//   
+// };
 
 
-$('#pitch-form').on('submit',testResult);
 
 
 let seed = {"notes":[
@@ -42,10 +68,15 @@ let seed = {"notes":[
     {"endTime":8,"pitch":"55","startTime":7}],
     "totalTime":8}
 
+
+//select playButton
+const playButton = $("#play-button")   
 //select piano roll canvas element 
 const canvasPianoRoll = document.querySelector("#piano-roll")
 //instantiate new visualizer
 let viz = new mm.PianoRollCanvasVisualizer(seed, canvasPianoRoll);
+//reset vizualizer to userMelody
+playButton.click(()=>{viz = new mm.PianoRollCanvasVisualizer(user_melody, canvasPianoRoll)});
 //make visualzer redraw pitches while melody is playing and instantiate player
 const vizPlayer = new mm.Player(false, {
     run: (note) => viz.redraw(note),
