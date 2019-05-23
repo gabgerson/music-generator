@@ -1,6 +1,6 @@
 """Models and database functions for Music Generator project."""
 from flask_sqlalchemy import SQLAlchemy
-
+# from server import app
 
 
 
@@ -39,7 +39,7 @@ class SavedMusic(db.Model):
 	user_id = db.Column(db.Integer, 
 						db.ForeignKey('users.user_id'),
 						 nullable=False)
-	location = db.Column(db.String(100), nullable=False)
+	music_data = db.Column(db.String, nullable=False)
 
 	user = db.relationship('User', backref=db.backref('saved_music'))
 
@@ -54,13 +54,13 @@ class SavedMusic(db.Model):
 
 # Helper functions
 
-def init_app():
-    # So that we can use Flask-SQLAlchemy, we'll make a Flask app.
-    from flask import Flask
-    app = Flask(__name__)
+# def init_app():
+#     # So that we can use Flask-SQLAlchemy, we'll make a Flask app.
+#     from flask import Flask
+#     # app = Flask(__name__)
 
-    connect_to_db(app)
-    print("Connected to DB.")
+#     connect_to_db(app)
+#     print("Connected to DB.")
 
 
 def connect_to_db(app):
@@ -75,5 +75,8 @@ def connect_to_db(app):
 
 
 if __name__ == "__main__":
-	init_app()
-	db.create_all()
+
+	from server import app
+	# init_app()
+	connect_to_db(app)
+	db.create_all()	

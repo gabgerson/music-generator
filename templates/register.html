@@ -1,0 +1,17 @@
+
+{% extends 'base.html' %}
+{% block body %}
+
+    <h2>Sign Up</h2>
+
+    <p>Sign up to save your creations.</p>
+
+    <form action="/sign-up" method="POST">
+        Email:<input type="email" name="email" required>
+        Password:<input type="password" name="password" required>
+        <input type="submit" value="Sign Up">
+    </form>
+
+
+  
+{% endblock %}
