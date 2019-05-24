@@ -34,7 +34,7 @@ const vizPlayer = new mm.Player(false, {
   ;
   
 //replace seed canvas piano roll with user melody piano canvas roll   
-function playStop(evt){
+function playStop(evt) {
     
   if (vizPlayer.isPlaying()) {
     vizPlayer.stop();
@@ -71,10 +71,10 @@ function musicone() {
     }
   musicAi.continueSequence(qns, rnn_steps, rnn_temperature).then((sample) => {
 
-    console.log(sCheck);
+    // console.log(sCheck);
     //save generated melody to global variable
     sam = sample;
-    console.log(sam);
+    // console.log(sam);
   //start playing generated melody
     musicAiPlayer.start(sample)});
 }
@@ -90,13 +90,20 @@ const save = $('#save')
 
 function saveToDatabase(evt) {
   const url="/save-melody.json";
+  evt.preventDefault()
+  let title = $("#title").val()
+  // console.log(title + "ads")
   let savedMelody = sam;
-  console.log(sam);
+  // console.log(sam);
   savedMelody = JSON.stringify(savedMelody);
-  console.log(savedMelody);
+  // console.log(savedMelody);
+  if (title === "") {
+    alert("Please add a title.");
+  }else{
   $.post( url, {
-    "j": savedMelody
-  });
+    "j": savedMelody,
+    "title": title
+  });}
 }
 
   save.click(saveToDatabase)
@@ -106,12 +113,13 @@ function saveToDatabase(evt) {
 
   function playSavedMusic(evt) {
     let eventId = event.target.id;
-    console.log(eventId)
+    // console.log(eventId)
     let melodyObjId = "melody-" + eventId;
-    console.log(melodyObjId);
+    // console.log(melodyObjId);
     melodyObjId=document.getElementById(melodyObjId); 
     user_melody = JSON.parse(melodyObjId.innerHTML);
     user_melody = mm.sequences.unquantizeSequence(user_melody)
     viz = new mm.PianoRollCanvasVisualizer(user_melody, canvasPianoRoll);
-    console.log(user_melody);}
+    console.log(user_melody);
+  }
       

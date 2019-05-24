@@ -13,6 +13,7 @@
   <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
   <!-- react strap cdn -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/reactstrap/4.8.0/reactstrap.min.js"></script>
+  
   <!-- react file -->
   <script src="static/js/currentNote.jsx" type="text/babel" ></script>
 
@@ -22,7 +23,7 @@
 
 {% block body %}
   
-    
+  <h4>Choose Some Notes</h4>
   <div id="show-pitches"><!-- display react radio buttons here --></div>
   
   <!-- display -->
@@ -48,13 +49,17 @@
     <!-- control buttons -->
     <div id="basic-buttons">
         <button id="play-button" type="button" onclick="playStop()" class="btn-primary"><i class="fas fa-play-circle"></i> Play</button>
-        <button id="stop-button" type="button" class="btn-danger"><i class="fas fa-stop-circle"></i> Stop</button>
-        <button id="pause-button" type="button" class="btn-warning"><i class="fas fa-pause"></i> Pause</button>
+        <!-- <button id="stop-button" type="button" class="btn-danger"><i class="fas fa-stop-circle"></i> Stop</button> -->
+        <!-- <button id="pause-button" type="button" class="btn-warning"><i class="fas fa-pause"></i> Pause</button> -->
         <button id="ai-play" type="button" onclick="musicone()"" class ="btn-success"><i class="fas fa-redo"></i> Generate Melody</button>
-        <button id="ai-stop" type="button" class="btn-danger"><i class="fas fa-stop-circle"></i> Stop Ai</button>
-        <form action="saved-melody.json" name= method = "POST">
-          <button id="save" type="button"class="btn-warning"><i class="fas fa-save"></i> Save</button>
-        </form>
+        <!-- <button id="ai-stop" type="button" class="btn-danger"><i class="fas fa-stop-circle"></i> Stop Ai</button> -->
+        {% if session.get('username') %}
+          <form action="saved-melody.json" name= method = "POST">
+            Title: <input type="text" id="title" required name="title">
+            <button id="save" type="submit"class="btn-warning"><i class="fas fa-save"></i> Save</button>
+          </form>
+          <h4 id="title-warning"></h4>
+        {% endif %}
     </div>
   </div>
 
@@ -62,12 +67,12 @@
         <p>wow i'm logged in so many cool melodies WOWOWOW</p>
 
         {% for melody in user_melodies %}
-          <button onclick="playSavedMusic()" id="{{ melody.music_id }}">Melody {{ melody.music_id}}</button>
+          <button onclick="playSavedMusic()" id="{{ melody.music_id }}">{{ melody.title}}</button>
           <li hidden id="melody-{{ melody.music_id }}">{{ melody.music_data }}</li>
         {% endfor %}
       
   {% endif %}
 
 
-
+  
 {% endblock %}

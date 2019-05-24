@@ -34,6 +34,7 @@ class SavedMusic(db.Model):
 	user_id = db.Column(db.Integer, 
 						db.ForeignKey('users.user_id'),
 						 nullable=False)
+	title = db.Column(db.String(70), nullable=False)
 	music_data = db.Column(db.String, nullable=False)
 
 	user = db.relationship('User', backref=db.backref('saved_music'))
