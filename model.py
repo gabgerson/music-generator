@@ -1,13 +1,8 @@
 """Models and database functions for Music Generator project."""
 from flask_sqlalchemy import SQLAlchemy
-# from server import app
-
-
 
 
 db = SQLAlchemy()
-
-
 
 #Model definitions
 

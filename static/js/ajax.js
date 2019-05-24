@@ -4,57 +4,6 @@
 //Display test result on page
 let user_melody;
 let sam;
-//
-// function testResult(evt) {
-//     evt.preventDefault();
-//     let url = "/pitches.json"
-//     let formInputs = {
-//         "pitches-one": $("input[name='pitches-one']:checked").val(),
-//         "pitches-two": $("input[name='pitches-two']:checked").val(),
-//         "pitches-three": $("input[name='pitches-three']:checked").val(),
-//         "pitches-four": $("input[name='pitches-four']:checked").val(),
-//         "pitches-five": $("input[name='pitches-five']:checked").val(),
-//         "pitches-six": $("input[name='pitches-six']:checked").val(),
-//         "pitches-sev": $("input[name='pitches-sev']:checked").val(),
-//         "pitches-eight": $("input[name='pitches-eight']:checked").val()
-//     };
-//     console.log(formInputs)
-    
-//     $.post(url, formInputs, (results) =>{ user_melody=results; 
-//           viz = new mm.PianoRollCanvasVisualizer(user_melody, canvasPianoRoll);
-//                              console.log(results); 
-//                              $("#show-pitches").text(JSON.stringify(results))}
-//                              )}
-                                                    
-
-// $('#pitch-form').on('submit',getPitches);
-
-// function getPitches(evt){
-//     evt.preventDefault();
-//     let pOne = $("input[name='pitches-one']:checked").val();
-//     let pTwo =  $("input[name='pitches-two']:checked").val();
-//     let pThree = $("input[name='pitches-three']:checked").val();
-//     let pFour = $("input[name='pitches-four']:checked").val();
-//     let pFive = $("input[name='pitches-five']:checked").val();
-//     let pSix = $("input[name='pitches-six']:checked").val();
-//     let pSev = $("input[name='pitches-sev']:checked").val();
-//     let pEight = $("input[name='pitches-eight']:checked").val();
-
-//   user_melody = {notes:[
-//       {pitch: pOne, startTime:0.0, endTime:1},
-//       {pitch: pTwo, startTime:1.0, endTime:2},
-//       {pitch: pThree, startTime:2.0, endTime:3},
-//       {pitch: pFour, startTime:3.0, endTime:4},
-//       {pitch: pFive, startTime:4.0, endTime:5},
-//       {pitch: pSix, startTime:5.0, endTime:6},
-//       {pitch: pSev, startTime:6.0, endTime:7},
-//       {pitch: pEight, startTime:7.0, endTime:8}],
-//       totalTime:8}
-
-//     console.log(user_melody)
-//   
-// };
-
 
 
 //seed melody
@@ -139,25 +88,30 @@ const save = $('#save')
 // then at the end of the session user can save all the melodies 
 //this way they wont't lose any melodies
 
-
-
 function saveToDatabase(evt) {
   const url="/save-melody.json";
-  let savedMelody = seed;
-  console.log(seed);
+  let savedMelody = sam;
+  console.log(sam);
   savedMelody = JSON.stringify(savedMelody);
   console.log(savedMelody);
   $.post( url, {
-    "j": savedMelody 
-});
-
-  //  $.post(url, savedMelody, (results)=>{
-  //    console.log(results)
-  //  })
+    "j": savedMelody
+  });
 }
-
 
   save.click(saveToDatabase)
 
 
 
+
+  function playSavedMusic(evt) {
+    let eventId = event.target.id;
+    console.log(eventId)
+    let melodyObjId = "melody-" + eventId;
+    console.log(melodyObjId);
+    melodyObjId=document.getElementById(melodyObjId); 
+    user_melody = JSON.parse(melodyObjId.innerHTML);
+    user_melody = mm.sequences.unquantizeSequence(user_melody)
+    viz = new mm.PianoRollCanvasVisualizer(user_melody, canvasPianoRoll);
+    console.log(user_melody);}
+      
