@@ -25,7 +25,7 @@ class CurrentNote extends React.Component {
     // console.log(this.props.className)
    
     }
-  
+   
   getPitchValue(evt) {
     this.state = {value: evt.target.value,
                   name: evt.target.name}
@@ -60,8 +60,8 @@ class CurrentNote extends React.Component {
       // let pSix = $("input[name='pitches-six']:checked").val();
       // let pSev = $("input[name='pitches-sev']:checked").val();
       // let pEight = $("input[name='pitches-eight']:checked").val();
-   
-    
+    //  dictionary of dictionaries  {1: 60,
+                                // 2:58}    loop
       // let u = {
       //   'pitches-one': 0
       // }
@@ -97,18 +97,50 @@ class CurrentNote extends React.Component {
 
   render() {
     return(
-      <div>   
-        <div>
+      <div className = "pitch-buttons">   
           <div>
-            <label className = "btn btn-secondary active"> 
+            <label className="btn btn-secondary">
+              <input type="radio" name={this.props.name} data-note="C4" className={this.props.className}  onChange={this.handleChange} value="60"/>C4
+            </label>
+          </div>
+          <div>
+            <label className="btn btn-secondary">
+              <input type="radio" name={this.props.name} data-note="B3" className={this.props.className}  onChange={this.handleChange} value="59"/>B3
+            </label>
+          </div>
+          <div>
+            <label className="btn btn-secondary">
+              <input type="radio" name={this.props.name} data-note="A3" className={this.props.className}  onChange={this.handleChange} value="57"/>A3
+            </label>
+          </div>
+          <div>
+            <label className="btn btn-secondary">
+              <input type="radio" name={this.props.name} data-note="G3" className={this.props.className}  onChange={this.handleChange} value="55"/>G3
+            </label>
+          </div>
+          <div>
+            <label className="btn btn-secondary">
+              <input type="radio" name={this.props.name} data-note="F3" className={this.props.className}  onChange={this.handleChange} value="53"/>F3
+            </label>
+          </div>
+          <div>
+            <label className="btn btn-secondary">
+              <input type="radio" name={this.props.name} data-note="E3" className={this.props.className}  onChange={this.handleChange} value="52"/>E3
+            </label> 
+          </div>
+          <div>
+            <label className="btn btn-secondary">
+              <input type="radio" name={this.props.name} data-note="D3" className={this.props.className}  onChange={this.handleChange} value="50"/>D3 
+            </label>
+          </div>
+          <div>
+            <label className="btn btn-secondary"> 
               <input type="radio" name={this.props.name} data-note="C3" className={this.props.className} onChange={this.handleChange}  defaultChecked value="48"/>C3
             </label>  
           </div>
-          <label className="btn btn-secondary">
-            <input type="radio" name={this.props.name} data-note="D3" className={this.props.className}  onChange={this.handleChange} value="50"/>D3 
-          </label>
+         
                     
-          <label className="btn btn-secondary">
+          {/* <label className="btn btn-secondary">
             <input type="radio" name={this.props.name} data-note="E3" className={this.props.className}  onChange={this.handleChange} value="52"/>E3
           </label>
           
@@ -130,11 +162,9 @@ class CurrentNote extends React.Component {
           
           <label className="btn btn-secondary">
             <input type="radio" name={this.props.name} data-note="C4" className={this.props.className}  onChange={this.handleChange} value="60"/>C4
-          </label>
+          </label> */}
         
-         </div>
-
-         <div id="display"></div>
+      
       </div>
     );
   }
