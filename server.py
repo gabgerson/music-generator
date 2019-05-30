@@ -1,11 +1,17 @@
 """Music Generator"""
 from jinja2 import StrictUndefined # Ask what this does docs are confusing
-from flask import (Flask, request, render_template, flash, session, jsonify, redirect)
+from flask import (Flask, request, render_template, flash, session, jsonify, redirect, g)
 from flask_debugtoolbar  import DebugToolbarExtension
 from model import User, SavedMusic, connect_to_db, db
 app = Flask(__name__)
 
 app.secret_key = "dabbdjdkslskdshakdfghj"
+
+JS_TESTING_MODE = False
+
+@app.before_request
+def add_tests():
+    g.jasmine_tests = JS_TESTING_MODE
 
 @app.route("/")
 def index():
@@ -113,6 +119,10 @@ def save_process():
 
 
 if __name__ == "__main__":
+
+    import sys
+    if sys.argv[-1] == "jstest":
+        JS_TESTING_MODE = True
     # We have to set debug=True here, since it has to be True at the
     
     # point that we invoke the DebugToolbarExtension

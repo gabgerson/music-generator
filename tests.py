@@ -1,7 +1,7 @@
 import unittest
 
 from server import app
-from model import db, connect_to_db
+from model import db, example_data, connect_to_db
 
 
 class MusicTests(unittest.TestCase):
@@ -33,12 +33,11 @@ class MusicTests(unittest.TestCase):
     #     self.assertNotIn(b"Please RSVP", result.data)
 
 
-# class PartyTestsDatabase(unittest.TestCase):
+# class MusicTestsDatabase(unittest.TestCase):
 #     """Flask tests that use the database."""
 
 #     def setUp(self):
 #         """Stuff to do before every test."""
-
 #         # Get the Flask test client
 #         self.client = app.test_client()
 
@@ -58,11 +57,11 @@ class MusicTests(unittest.TestCase):
 #         db.session.close()
 #         db.drop_all()
 
-#     def test_games(self):
-#         """Test departments page."""
+    # def test_games(self):
+    #     """Test departments page."""
 
-#         result = self.client.get("/games")
-#         self.assertIn(b"Power Grid", result.data)
+    #     result = self.client.get("/games")
+    #     self.assertIn(b"Power Grid", result.data)
 
 
 if __name__ == "__main__":

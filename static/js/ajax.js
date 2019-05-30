@@ -2,7 +2,7 @@
 
 
 //Display test result on page
-let user_melody;
+let userMelody;
 let sam;
 
 
@@ -24,11 +24,13 @@ const playButton = $("#play-button")
 //select piano roll canvas element 
 const canvasPianoRoll = document.querySelector("#piano-roll")
 //instantiate new visualizer
-let viz = new mm.PianoRollCanvasVisualizer(seed, canvasPianoRoll);
+//from Hello Magenta demo on glitch
+let pianoRoll = new mm.PianoRollCanvasVisualizer(seed, canvasPianoRoll);
 
 //make visualzer redraw pitches while melody is playing and instantiate player
-const vizPlayer = new mm.Player(false, {
-    run: (note) => viz.redraw(note),
+// got this from Hello Magenta demo on glitch
+const pianoRollPlayer = new mm.Player(false, {
+    run: (note) => pianoRoll.redraw(note),
     stop: () => {console.log('done');}
   });
   ;
@@ -36,12 +38,12 @@ const vizPlayer = new mm.Player(false, {
 //replace seed canvas piano roll with user melody piano canvas roll   
 function playStop(evt) {
     
-  if (vizPlayer.isPlaying()) {
-    vizPlayer.stop();
-  } else if (user_melody === undefined){
-      vizPlayer.start(seed);
+  if (pianoRollPlayer.isPlaying()) {
+    pianoRollPlayer.stop();
+  } else if (userMelody === undefined){
+      pianoRollPlayer.start(seed);
   }else {
-      vizPlayer.start(user_melody);
+      pianoRollPlayer.start(userMelody);
   } 
   }
 
@@ -56,32 +58,33 @@ let rnn_temperature = 1;
 const musicAiPlayer = new mm.Player();
 
 //quantize melody and generate new one
-function musicone() {
+function generateMelody() {
    let qns;
    let sCheck;
-    if (user_melody===undefined) {
+    if (userMelody===undefined) {
    
          qns = mm.sequences.quantizeNoteSequence(seed, 4);
          console.log("using seed")
           sCheck="seed"
     }else {
-        qns = mm.sequences.quantizeNoteSequence(user_melody, 4);
+        qns = mm.sequences.quantizeNoteSequence(userMelody, 4);
         console.log("using user_melody")
          sCheck="userM"
     }
+
   musicAi.continueSequence(qns, rnn_steps, rnn_temperature).then((sample) => {
 
     // console.log(sCheck);
     //save generated melody to global variable
     sam = sample;
-    // console.log(sam);
+    console.log(sam);
   //start playing generated melody
     musicAiPlayer.start(sample)});
 }
   
 //select save button
 const save = $('#save')
-// going to get user_melody and current ai generated melody and 
+// going to get userMelody and current ai generated melody and 
 //save send to backend to save to database
 // maybe a better way to do this late is to use a list 
 //the list would store all melodies for that session
@@ -103,7 +106,7 @@ function saveToDatabase(evt) {
   $.post( url, {
     "j": savedMelody,
     "title": title
-  });}
+  });} return savedMelody
 }
 
   save.click(saveToDatabase)
@@ -112,14 +115,20 @@ function saveToDatabase(evt) {
 
 
   function playSavedMusic(evt) {
+    // get id off of button
     let eventId = event.target.id;
     // console.log(eventId)
+    // add melody- to eventId 
     let melodyObjId = "melody-" + eventId;
     // console.log(melodyObjId);
-    melodyObjId=document.getElementById(melodyObjId); 
-    user_melody = JSON.parse(melodyObjId.innerHTML);
-    user_melody = mm.sequences.unquantizeSequence(user_melody)
-    viz = new mm.PianoRollCanvasVisualizer(user_melody, canvasPianoRoll);
-    console.log(user_melody);
+    // select the element that contains the melody object
+    melodyObjId=document.getElementById(melodyObjId);
+    //turn into JSON 
+    userMelody = JSON.parse(melodyObjId.innerHTML);
+    // unquantize melody
+    userMelody = mm.sequences.unquantizeSequence(userMelody)
+    // redraw vizualizer with melody
+    pianoRoll = new mm.PianoRollCanvasVisualizer(userMelody, canvasPianoRoll);
+    console.log(userMelody);
   }
       

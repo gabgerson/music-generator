@@ -46,17 +46,11 @@ class SavedMusic(db.Model):
 		return f'<SavedMusic user_id={self.user_id} music_id={self.music_id}>'
 
 
+def example_data():
 
 
-# Helper functions
-
-# def init_app():
-#     # So that we can use Flask-SQLAlchemy, we'll make a Flask app.
-#     from flask import Flask
-#     # app = Flask(__name__)
-
-#     connect_to_db(app)
-#     print("Connected to DB.")
+	new_user = User(email="gaglightning@gmail.com", password="password")
+	new_melody = SavedMusic(user_id=1, title="This is a great title", music_data='{"notes":musafijsadlf;jsda;fisda;foi}')
 
 
 def connect_to_db(app):
