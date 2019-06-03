@@ -2,8 +2,8 @@
 
 
 //Display test result on page
-let userMelody;
-let sam;
+window.userMelody = undefined;
+// let sam;
 
 
 //seed melody
@@ -72,18 +72,38 @@ function generateMelody() {
          sCheck="userM"
     }
 
-  musicAi.continueSequence(qns, rnn_steps, rnn_temperature).then((sample) => {
+  musicAi.continueSequence(qns, rnn_steps, rnn_temperature)
+    .then((sample) => {
 
-    // console.log(sCheck);
-    //save generated melody to global variable
-    sam = sample;
-    console.log(sam);
-  //start playing generated melody
-    musicAiPlayer.start(sample)});
-}
+      // console.log(sCheck);
+      //save generated melody to global variable
+      // sam = sample;
+      console.log(sample);
+    //start playing generated melody
+      musicAiPlayer.start(sample);
+
+      const save = $('#save');
+      save.click((evt) => {
+        const url="/save-melody.json";
+        evt.preventDefault()
+        let title = $("#title").val()
+        // console.log(title + "ads")
+        let savedMelody = sample;
+        // console.log(sam);
+        savedMelody = JSON.stringify(savedMelody);
+        // console.log(savedMelody);
+        if (title === "") {
+          alert("Please add a title.");
+        }else{
+        $.post( url, {
+          "j": savedMelody,
+          "title": title
+        });}
+      });
+    });
   
 //select save button
-const save = $('#save')
+
 // going to get userMelody and current ai generated melody and 
 //save send to backend to save to database
 // maybe a better way to do this late is to use a list 
@@ -109,7 +129,7 @@ function saveToDatabase(evt) {
   });} return savedMelody
 }
 
-  save.click(saveToDatabase)
+  
 
 
 
@@ -131,4 +151,4 @@ function saveToDatabase(evt) {
     pianoRoll = new mm.PianoRollCanvasVisualizer(userMelody, canvasPianoRoll);
     console.log(userMelody);
   }
-      
+    
