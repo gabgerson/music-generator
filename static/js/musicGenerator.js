@@ -33,11 +33,9 @@ const pianoRollPlayer = new mm.Player(false, {
     run: (note) => pianoRoll.redraw(note),
     stop: () => {console.log('done');}
   });
-  ;
   
 //replace seed canvas piano roll with user melody piano canvas roll   
 function playStop(evt) {
-    
   if (pianoRollPlayer.isPlaying()) {
     pianoRollPlayer.stop();
   } else if (userMelody === undefined){
@@ -45,7 +43,22 @@ function playStop(evt) {
   }else {
       pianoRollPlayer.start(userMelody);
   } 
-  }
+  };
+function stop(evt) {
+  if (pianoRollPlayer.isPlaying()) {
+    pianoRollPlayer.stop();
+}}
+ 
+function changeText(evt) {
+  const playButton = document.querySelector("#play-button")
+    if (pianoRollPlayer.getPlayState() === "Stopped") {
+      playButton.innerHTML = 'Play'
+    } else if (playButton.innerHTML === 'Play') {
+        playButton.innerHTML = 'Stop';
+      } else {
+        playButton.innerHTML = 'Play';
+      }
+  } 
 
 //connecting to musicRNN and checkpoint
 const musicAi = new mm.MusicRNN('https://storage.googleapis.com/magentadata/js/checkpoints/music_rnn/basic_rnn');
@@ -96,11 +109,11 @@ function generateMelody() {
           alert("Please add a title.");
         }else{
         $.post( url, {
-          "j": savedMelody,
+          "savedMelody": savedMelody,
           "title": title
         });}
       });
-    });
+    });}
   
 //select save button
 
@@ -113,6 +126,7 @@ function generateMelody() {
 
 function saveToDatabase(evt) {
   const url="/save-melody.json";
+  const save = $('#save');
   evt.preventDefault()
   let title = $("#title").val()
   // console.log(title + "ads")
@@ -124,9 +138,9 @@ function saveToDatabase(evt) {
     alert("Please add a title.");
   }else{
   $.post( url, {
-    "j": savedMelody,
+    "savedMelody": savedMelody,
     "title": title
-  });} return savedMelody
+  });}
 }
 
   
@@ -146,9 +160,8 @@ function saveToDatabase(evt) {
     //turn into JSON 
     userMelody = JSON.parse(melodyObjId.innerHTML);
     // unquantize melody
-    userMelody = mm.sequences.unquantizeSequence(userMelody)
+    userMelody = mm.sequences.unquantizeSequence(userMelody);
     // redraw vizualizer with melody
     pianoRoll = new mm.PianoRollCanvasVisualizer(userMelody, canvasPianoRoll);
     console.log(userMelody);
   }
-    

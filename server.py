@@ -9,6 +9,10 @@ app.secret_key = "dabbdjdkslskdshakdfghj"
 
 JS_TESTING_MODE = False
 
+radio_button_info_dictionary = {
+
+}
+
 @app.before_request
 def add_tests():
     g.jasmine_tests = JS_TESTING_MODE
@@ -75,7 +79,9 @@ def login_process():
     #if use in database add then to session
     if user_query != None: 
         session["username"] = email
+        session["user_id"] = user_query.user_id
         print(session["username"])
+        print(session["user_id"])
         flash('Logged in')
         user_id = user_query.user_id
         return redirect("/")
@@ -96,21 +102,21 @@ def save_process():
 
     # get data from frontend
     # print("LOOOOK  AT ME !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-    jsdata = request.form.get("j")
+    saved_melody = request.form.get("savedMelody")
     title = request.form.get("title")
     print(title)
     # print(jsdata)
     # make data a string
-    jsdata = str(jsdata)
+    saved_melody = str(save_melody)
     # print(jsdata)
     print(session["username"])
     # if there is data add it to database
-    if jsdata != "None":
+    if saved_melody != "None":
         email = session["username"]
         # print(email)
         user_query = User.query.filter(User.email==email).first()
         user_id = user_query.user_id
-        new_music = SavedMusic(user_id=user_id, music_data=jsdata, title=title )
+        new_music = SavedMusic(user_id=user_id, music_data=saved_melody, title=title )
         # print(new_music)
         db.session.add(new_music)
         db.session.commit()

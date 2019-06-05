@@ -13,7 +13,6 @@
   <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
   <!-- react strap cdn -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/reactstrap/4.8.0/reactstrap.min.js"></script>
-  
   <!-- react file -->
   <script src="static/js/currentNote.jsx" type="text/babel" ></script>
 
@@ -32,14 +31,14 @@
        ♩ Current Notes ♩ 
         <!-- <i class="fas fa-music"></i> -->
     </div>
-    <span id="one">C3</span>|
+    <!-- <span id="">C3</span>|
     <span id="two">C3</span>|
     <span id="three">C3</span>|
     <span id="four">C3</span>|
     <span id="five">C3</span>|
     <span id="six">C3</span>|
     <span id="sev">C3</span>|        
-    <span id="eight">C3</span>|
+    <span id="eight">C3</span>| -->
   </div>
   <!-- <div id="test-notes"></div> -->
 
@@ -53,14 +52,14 @@
     <!-- control buttons -->
     <div id="basic-buttons">
         <button id="play-button" type="button" onclick="playStop()" class="btn-primary"><i class="fas fa-play-circle"></i> Play</button>
-        <!-- <button id="stop-button" type="button" class="btn-danger"><i class="fas fa-stop-circle"></i> Stop</button> -->
+        <button id="stop-button" type="button" onclick="stop()" class="btn-danger"><i class="fas fa-stop-circle"></i> Stop</button>
         <!-- <button id="pause-button" type="button" class="btn-warning"><i class="fas fa-pause"></i> Pause</button> -->
         <button id="ai-play" type="button" onclick="generateMelody()"" class ="btn-success"><i class="fas fa-redo"></i> Generate Melody</button>
         <!-- <button id="ai-stop" type="button" class="btn-danger"><i class="fas fa-stop-circle"></i> Stop Ai</button> -->
         {% if session.get('username') %}
-          <form action="saved-melody.json" name= method = "POST">
+          <form action="saved-melody.json" method = "POST">
             Title: <input type="text" id="title" required name="title">
-            <button id="save" type="submit"class="btn-warning"><i class="fas fa-save"></i> Save</button>
+            <button id="save" onclick="saveToDatabase()"type="submit"class="btn-warning"><i class="fas fa-save"></i> Save</button>
           </form>
           <h4 id="title-warning"></h4>
         {% endif %}

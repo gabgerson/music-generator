@@ -1,120 +1,119 @@
-
-
-
-
-class CurrentNote extends React.Component {
+class NoteRadios extends React.Component {
         
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     // this.handleChange = this.handleChange.bind(this);
-    this.noteOne = this.noteOne.bind(this);
-    this.getPitchValue = this.getPitchValue.bind(this);
+    this.updateNoteDisplay = this.updateNoteDisplay.bind(this);
+    // this.getPitchValue = this.getPitchValue.bind(this);
 
-    this.pianoRollCanvas = React.createRef();
+    // this.pianoRollCanvas = React.createRef();
+    this.state = {
+      currentNotePitch: "C3",
+    }
   }
 
 
 
-  noteOne(evt) {
-    //   this.setState()
-    this.state = {value: evt.target.dataset.note}
+  updateNoteDisplay(evt) {
+    console.log(evt)
+    this.setState({currentNotePitch: evt.target.dataset.note})
+    const note = {
+      pitch: evt.target.value,
+      startTime: this.props.position,
+      endTime: this.props.position + 1,
+    }
+    this.props.changeNote(this.props.position, note)
     console.log("you clicked this");
     const showPitch = document.getElementById(this.props.className);
     console.log(showPitch)
     // console.log("wow my value is" + this.state.value)
-    showPitch.innerHTML = this.state.value
+    showPitch.innerHTML = this.state.currentNotePitch
 
     // console.log(this.props.className)
-   
-    }
-   
-  getPitchValue(evt) {
-    this.state = {value: evt.target.value,
-                  name: evt.target.name}
-    console.log(this.state.value)
-    console.log(this.state.name) 
-    let myDict = {}
-    myDict[this.state.name] = this.state.value 
-    // not sure how to get this to work and format correctly in the userMelodyObject this.state
-   
-    // console.log(this.state.noteObject) 
-    // if(this.state.name==='pitches-one') {
-    //   let pOne = this.state.value;
-    // }else if (this.state)
-
-    // update note object with this.state
-    // jquery gone now 
-    
-      let pOne = document.querySelector('input[name="pitches-one"]:checked').value;
-      let pTwo =  document.querySelector('input[name="pitches-two"]:checked').value;
-      let pThree = document.querySelector('input[name="pitches-three"]:checked').value;
-      let pFour = document.querySelector('input[name="pitches-four"]:checked').value;
-      let pFive = document.querySelector('input[name="pitches-five"]:checked').value;
-      let pSix = document.querySelector('input[name="pitches-six"]:checked').value;
-      let pSev = document.querySelector('input[name="pitches-sev"]:checked').value;
-      let pEight = document.querySelector('input[name="pitches-eight"]:checked').value;
-   
-      // let pOne = $("input[name='pitches-one']:checked").val();
-      // let pTwo =  $("input[name='pitches-two']:checked").val();
-      // let pThree = $("input[name='pitches-three']:checked").val();
-      // let pFour = $("input[name='pitches-four']:checked").val();
-      // let pFive = $("input[name='pitches-five']:checked").val();
-      // let pSix = $("input[name='pitches-six']:checked").val();
-      // let pSev = $("input[name='pitches-sev']:checked").val();
-      // let pEight = $("input[name='pitches-eight']:checked").val();
-    //  dictionary of dictionaries  {1: 60,
-                                // 2:58}    loop
-      // let u = {
-      //   'pitches-one': 0
-      // }
-    userMelody = {notes:[
-        {pitch: pOne, startTime:0.0, endTime:1},
-        {pitch: pTwo, startTime:1.0, endTime:2},
-        {pitch: pThree, startTime:2.0, endTime:3},
-        {pitch: pFour, startTime:3.0, endTime:4},
-        {pitch: pFive, startTime:4.0, endTime:5},
-        {pitch: pSix, startTime:5.0, endTime:6},
-        {pitch: pSev, startTime:6.0, endTime:7},
-        {pitch: pEight, startTime:7.0, endTime:8}],
-        totalTime:8}  
-      pianoRoll = new mm.PianoRollCanvasVisualizer(userMelody, this.pianoRollCanvas.current);
-
-
-
+    console.log(this.props.position + "this is position")
   }
-    
+   
+  // pianoRoll = new mm.PianoRollCanvasVisualizer(userMelody, this.pianoRollCanvas.current);
 
-  // let user say how manypitches they want
+  // let user say how many pitches they want
   // then render that many buttons
-  // then format the obeject correctly ???
-  
-
-
 
   handleChange = (evt)=>{
-    this.noteOne(evt);
-    this.getPitchValue(evt);
-}
+    this.updateNoteDisplay(evt);
+  }
     
 
   render() {
     const notes = [
       {
-        note: 'C4',
+        note: "C4",
         value: 60
       },
       {
-        note: 'C3',
-        value: 68
+        note: "B3",
+        value: 59
       },
+      {
+        note: "A#/Bb3",
+        value: 58
+      },
+      {
+        note: "A3",
+        value: 57
+      },
+      {
+        note: "G#/Ab3",
+        value: 56
+      },
+      {
+        note: "G3",
+        value: 55
+      },
+      {
+        note: "F#/Gb3",
+        value: 54
+      },
+      {
+        note: "F3",
+        value: 53
+      },
+      {
+        note: "E3",
+        value: 52
+      },
+      {
+        note: "D#/Eb3",
+        value: 51
+      },
+      {
+        note: "D3",
+        value: 50
+      },
+      {
+        note: "C#/Db3",
+        value: 49
+      },
+      {
+        note: "C3",
+        value: 48
+      },
+
     ];
 
     const noteRadios = [];
     for (const note of notes) {
-      const isChecked = this.props.currentNotePitch === note.note;
+      const isChecked = this.state.currentNotePitch === note.note;
       noteRadios.push(
         <label className="btn btn-secondary">
-          <input type="radio" name={this.props.name} data-note={note.note} className={this.props.className}  onChange={this.handleChange} checked={isChecked} value={note.value}/>
+          <input 
+            type="radio" 
+            name={this.props.name} 
+            data-note={note.note} 
+            className={this.props.className} 
+            onChange={this.handleChange} 
+            checked={isChecked} 
+            value={note.value}
+          />
           {note.note}
         </label>
       );
@@ -128,79 +127,26 @@ class CurrentNote extends React.Component {
           }}>
           {noteRadios}
         </div>  
-          {/* <div>
-            <label className="btn btn-secondary">
-              <input type="radio" name={this.props.name} data-note="C4" className={this.props.className}  onChange={this.handleChange} value="60"/>C4
-            </label>
-          </div>
-          <div>
-            <label className="btn btn-secondary">
-              <input type="radio" name={this.props.name} data-note="B3" className={this.props.className}  onChange={this.handleChange} value="59"/>B3
-            </label>
-          </div>
-          <div>
-            <label className="btn btn-secondary">
-              <input type="radio" name={this.props.name} data-note="A3" className={this.props.className}  onChange={this.handleChange} value="57"/>A3
-            </label>
-          </div>
-          <div>
-            <label className="btn btn-secondary">
-              <input type="radio" name={this.props.name} data-note="G3" className={this.props.className}  onChange={this.handleChange} value="55"/>G3
-            </label>
-          </div>
-          <div>
-            <label className="btn btn-secondary">
-              <input type="radio" name={this.props.name} data-note="F3" className={this.props.className}  onChange={this.handleChange} value="53"/>F3
-            </label>
-          </div>
-          <div>
-            <label className="btn btn-secondary">
-              <input type="radio" name={this.props.name} data-note="E3" className={this.props.className}  onChange={this.handleChange} value="52"/>E3
-            </label> 
-          </div>
-          <div>
-            <label className="btn btn-secondary">
-              <input type="radio" name={this.props.name} data-note="D3" className={this.props.className}  onChange={this.handleChange} value="50"/>D3 
-            </label>
-          </div>
-          <div>
-            <label className="btn btn-secondary"> 
-              <input type="radio" name={this.props.name} data-note="C3" className={this.props.className} onChange={this.handleChange}  defaultChecked value="48"/>C3
-            </label>  
-          </div> */}
-         
-                    
-          {/* <label className="btn btn-secondary">
-            <input type="radio" name={this.props.name} data-note="E3" className={this.props.className}  onChange={this.handleChange} value="52"/>E3
-          </label>
-          
-          <label className="btn btn-secondary">
-            <input type="radio" name={this.props.name} data-note="F3" className={this.props.className}  onChange={this.handleChange} value="53"/>F3
-          </label>
-          
-          <label className="btn btn-secondary">
-            <input type="radio" name={this.props.name} data-note="G3" className={this.props.className}  onChange={this.handleChange} value="55"/>G3
-          </label>
-          
-          <label className="btn btn-secondary">
-            <input type="radio" name={this.props.name} data-note="A3" className={this.props.className}  onChange={this.handleChange} value="57"/>A3
-          </label>
-          
-          <label className="btn btn-secondary">
-            <input type="radio" name={this.props.name} data-note="B3" className={this.props.className}  onChange={this.handleChange} value="59"/>B3
-          </label>
-          
-          <label className="btn btn-secondary">
-            <input type="radio" name={this.props.name} data-note="C4" className={this.props.className}  onChange={this.handleChange} value="60"/>C4
-          </label> */}
-        
-        
       </div>
     );
   }
 }
 
-class App extends React.Component{
+
+class NoteDisplay extends React.Component {
+  constructor() { 
+    super();
+  };
+
+  render() {
+    return(
+      <label name="note span" htmlFor={this.props.id}>
+        <span id={this.props.id}>C3</span>|
+      </label>
+    )
+  }
+}
+class App extends React.Component {
 
   // get notes off of input form note object with pitch numbers
 // use react to get input
@@ -209,41 +155,96 @@ class App extends React.Component{
     this.state = {
       notes: [
         {
-          pitch: "C3"
-        }
+          pitch: 48,
+          startTime: 0.0,
+          endTime: 1.0
+        },
       ],
 
     };
-
-    this.pitchValue = {
-      C3: 48
-    };
+    this.pianoRollCanvas = React.createRef();
+    this.seed = {
+      pianoRoll : new mm.PianoRollCanvasVisualizer(userMelody, this.pianoRollCanvas.current)
+    }
+    // this.pitchValue = {
+    //   C4: 60,
+    //   B3: 59,
+    //   Bb3: 58,
+    //   A3: 57,
+    //   Ab3: 56,
+    //   G3: 55,
+    //   Gb3: 54,
+    //   F3: 53,
+    //   E3: 52,
+    //   Eb3: 51,
+    //   D3: 50,
+    //   Db3: 49,
+    //   C3: 48,
+    // };
 
     this.addNote = this.addNote.bind(this);
+    this.changeNote = this.changeNote.bind(this);
   }
 
-  addNote() {
+  changeNote(position, note) {
+    let stateCopy = Object.assign({}, this.state)
+    stateCopy.notes[position] = note;
+    this.setState(stateCopy)  
+    let totalTime = this.state.notes.slice(-1)
+    totalTime = totalTime[0]["endTime"]
+    userMelody = {notes: this.state.notes,
+                   totalTime: totalTime  
+                  }
+    pianoRoll = new mm.PianoRollCanvasVisualizer(userMelody, this.pianoRollCanvas.current)  
+    //need to fix this 
+    // console.log(this.state.notes+ "from change note")
+    // console.log(JSON.stringify(userMelody) +" "+"this is user Melody from change note") 
+  }
+
+  addNote(evt) {
     this.setState((prevState) => {
+      const end = this.state.notes.slice(-1)
+      console.log( end[0].startTime, end[0].endTime)
+      console.log(this.state)
+      
+          
       return {
-        notes: prevState.notes.concat([ { pitch: "C4" } ])
+        
+        notes: prevState.notes.concat([ { pitch: 48, 
+                                          startTime: end[0].endTime, 
+                                          endTime: end[0].endTime + 1 } ])
       };
+
     });
   }
-
   render() {
     const currNotes = [];
+    const noteDisplay = [];
+    let position = 0;
     for (const note of this.state.notes) {
-      currNotes.push(<CurrentNote currentNotePitch={note.pitch} />);
-    }
+      currNotes.push(<NoteRadios 
+                      className={position} 
+                      name={position} 
+                      currentNotePitch={note.pitch} 
+                      changeNote={this.changeNote} 
+                      position={position}
+                    /> );
+      noteDisplay.push(<NoteDisplay id={position}/>)
+      position++;
+    };
 
     return (
       <div>
         <button onClick={this.addNote}>Add Note</button>
-        <canvas id="piano-roll" ref={this.pianoRollCanvas}></canvas>
         <p>Hello I am the app component</p>
-        <div 
-        >
+        <div>
           {currNotes}
+        </div>
+        <div>
+          {noteDisplay}
+        </div>
+        <div>
+          <canvas id="piano-roll" ref={this.pianoRollCanvas}></canvas>
         </div>
       </div>  
     );
@@ -254,14 +255,6 @@ class App extends React.Component{
 ReactDOM.render(
     (
       <div>
-        {/* <CurrentNote name="pitches-one" className="one" />
-        <CurrentNote name="pitches-two" className="two" />
-        <CurrentNote name="pitches-three" className="three" />
-        <CurrentNote name="pitches-four" className="four" />
-        <CurrentNote name="pitches-five" className="five" />
-        <CurrentNote name="pitches-six" className="six" />
-        <CurrentNote name="pitches-sev" className="sev" />
-        <CurrentNote name="pitches-eight" className="eight" /> */}
         <App/>
       </div>
     ),
