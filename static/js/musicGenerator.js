@@ -3,11 +3,10 @@
 
 //Display test result on page
 window.userMelody = undefined;
-// let sam;
-
+// let sample;
 
 //seed melody
-let seed = {"notes":[
+const defaultSeed = {"notes":[
     {"endTime":1,"pitch":"55","startTime":0},
     {"endTime":2,"pitch":"48","startTime":1},
     {"endTime":3,"pitch":"57","startTime":2},
@@ -25,75 +24,86 @@ const playButton = $("#play-button")
 const canvasPianoRoll = document.querySelector("#piano-roll")
 //instantiate new visualizer
 //from Hello Magenta demo on glitch
-let pianoRoll = new mm.PianoRollCanvasVisualizer(seed, canvasPianoRoll);
+let visualizer = new mm.PianoRollCanvasVisualizer(defaultSeed, canvasPianoRoll)
+// function pianoRoll(){if(userMelody===undefined){
+//                      return new mm.PianoRollCanvasVisualizer(defaultSeed, canvasPianoRoll)}
+//                      return new mm.PianoRollCanvasVisualizer(userMelody, canvasPianoRoll)}
 
 //make visualzer redraw pitches while melody is playing and instantiate player
 // got this from Hello Magenta demo on glitch
-const pianoRollPlayer = new mm.Player(false, {
-    run: (note) => pianoRoll.redraw(note),
+let pianoRollPlayer = new mm.Player(false, {
+    run: (note) => visualizer.redraw(note),
     stop: () => {console.log('done');}
   });
   
 //replace seed canvas piano roll with user melody piano canvas roll   
-function playStop(evt) {
-  if (pianoRollPlayer.isPlaying()) {
-    pianoRollPlayer.stop();
-  } else if (userMelody === undefined){
-      pianoRollPlayer.start(seed);
-  }else {
-      pianoRollPlayer.start(userMelody);
-  } 
-  };
-function stop(evt) {
-  if (pianoRollPlayer.isPlaying()) {
-    pianoRollPlayer.stop();
-}}
+// function playStop(evt) {
+//   if (pianoRollPlayer.isPlaying()) {
+//     pianoRollPlayer.stop();
+//   } else if (userMelody === undefined){
+//       pianoRollPlayer.start(defaultSeed);
+//   }else {
+//       pianoRollPlayer.start(userMelody);
+//   } 
+//   };
+// function stop(evt) {
+//   if (pianoRollPlayer.isPlaying()) {
+//     pianoRollPlayer.stop();
+// }};
  
-function changeText(evt) {
-  const playButton = document.querySelector("#play-button")
-    if (pianoRollPlayer.getPlayState() === "Stopped") {
-      playButton.innerHTML = 'Play'
-    } else if (playButton.innerHTML === 'Play') {
-        playButton.innerHTML = 'Stop';
-      } else {
-        playButton.innerHTML = 'Play';
-      }
-  } 
+// function changeText(evt) {
+//   const playButton = document.querySelector("#play-button")
+//     if (pianoRollPlayer.getPlayState() === "Stopped") {
+//       playButton.innerHTML = 'Play'
+//     } else if (playButton.innerHTML === 'Play') {
+//         playButton.innerHTML = 'Stop';
+//       } else {
+//         playButton.innerHTML = 'Play';
+//       }
+//   } 
 
-//connecting to musicRNN and checkpoint
+// connecting to musicRNN and checkpoint
 const musicAi = new mm.MusicRNN('https://storage.googleapis.com/magentadata/js/checkpoints/music_rnn/basic_rnn');
-//how long the generated melody will be
+// how long the generated melody will be
 let rnn_steps = 100;
 //how random the generated melody will be
 let rnn_temperature = 1;
 
-//player for ai generated melody
+// player for ai generated melody
 const musicAiPlayer = new mm.Player();
 
-//quantize melody and generate new one
-function generateMelody() {
+// quantize melody and generate new one
+function quantizeSequence() {
    let qns;
-   let sCheck;
+   let seedSequence;
     if (userMelody===undefined) {
    
-         qns = mm.sequences.quantizeNoteSequence(seed, 4);
+         qns = mm.sequences.quantizeNoteSequence(defaultSeed, 4);
          console.log("using seed")
-          sCheck="seed"
+          seedSequence="default seed"
     }else {
         qns = mm.sequences.quantizeNoteSequence(userMelody, 4);
         console.log("using user_melody")
-         sCheck="userM"
-    }
+         seedSequence="user melody"
+    } return qns
+  }
 
+function generateMelody(evt) {
+
+  const qns = quantizeSequence()
   musicAi.continueSequence(qns, rnn_steps, rnn_temperature)
     .then((sample) => {
+      
+      pianoRoll = new mm.PianoRollCanvasVisualizer(sample, canvasPianoRoll)
+
+      pianoRollPlayer.start(sample)
 
       // console.log(sCheck);
       //save generated melody to global variable
       // sam = sample;
       console.log(sample);
     //start playing generated melody
-      musicAiPlayer.start(sample);
+      // musicAiPlayer.start(sample);
 
       const save = $('#save');
       save.click((evt) => {
@@ -113,7 +123,7 @@ function generateMelody() {
           "title": title
         });}
       });
-    });}
+    })}
   
 //select save button
 
@@ -130,7 +140,7 @@ function saveToDatabase(evt) {
   evt.preventDefault()
   let title = $("#title").val()
   // console.log(title + "ads")
-  let savedMelody = sam;
+  let savedMelody = sample;
   // console.log(sam);
   savedMelody = JSON.stringify(savedMelody);
   // console.log(savedMelody);
@@ -142,11 +152,6 @@ function saveToDatabase(evt) {
     "title": title
   });}
 }
-
-  
-
-
-
 
   function playSavedMusic(evt) {
     // get id off of button

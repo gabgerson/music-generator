@@ -14,7 +14,9 @@
   <!-- react strap cdn -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/reactstrap/4.8.0/reactstrap.min.js"></script>
   <!-- react file -->
-  <script src="static/js/currentNote.jsx" type="text/babel" ></script>
+
+  <!-- <script src="static/js/musicGenerator.js" type="text/javascript"></script> -->
+  <script src="static/js/musicGenerator.jsx" type="text/babel" ></script>
 
 
 {% endblock %}
@@ -46,15 +48,12 @@
   <!-- piano roll goes below -->
   <canvas id="piano-roll"></canvas>
   <div class="container-fluid">
-    <div id="current-pitchs-selection"></div>
-  </div>
-  <div class="container-fluid">
     <!-- control buttons -->
-    <div id="basic-buttons">
-        <button id="play-button" type="button" onclick="playStop()" class="btn-primary"><i class="fas fa-play-circle"></i> Play</button>
-        <button id="stop-button" type="button" onclick="stop()" class="btn-danger"><i class="fas fa-stop-circle"></i> Stop</button>
+<!-- <div id="basic-buttons"> -->
+        <!-- <button id="play-button" type="button" onclick="playStop()" class="btn-primary"><i class="fas fa-play-circle"></i> Play</button>  -->
+        <!-- <button id="stop-button" type="button" onclick="stop()" class="btn-danger"><i class="fas fa-stop-circle"></i> Stop</button> -->
         <!-- <button id="pause-button" type="button" class="btn-warning"><i class="fas fa-pause"></i> Pause</button> -->
-        <button id="ai-play" type="button" onclick="generateMelody()"" class ="btn-success"><i class="fas fa-redo"></i> Generate Melody</button>
+        <!-- <button id="ai-play" type="button" onclick="generateMelody()"" class ="btn-success"><i class="fas fa-redo"></i> Generate Melody</button> -->
         <!-- <button id="ai-stop" type="button" class="btn-danger"><i class="fas fa-stop-circle"></i> Stop Ai</button> -->
         {% if session.get('username') %}
           <form action="saved-melody.json" method = "POST">
