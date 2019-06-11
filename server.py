@@ -3,6 +3,7 @@ from jinja2 import StrictUndefined # Ask what this does docs are confusing
 from flask import (Flask, request, render_template, flash, session, jsonify, redirect, g)
 from flask_debugtoolbar  import DebugToolbarExtension
 from model import User, SavedMusic, connect_to_db, db
+from werkzeug.security import generate_password_hash, check_password_hash
 app = Flask(__name__)
 
 app.secret_key = "dabbdjdkslskdshakdfghj"
@@ -50,8 +51,11 @@ def register_process():
     email = request.form.get('email')
     password = request.form.get('password')
     # if that use is not in database add them
-    if User.query.filter(User.email==email).first() == None:
-        user = User(email=email, password=password)
+    if "username" in session:
+        flash("Please logout")
+    elif User.query.filter(User.email==email).first() == None:
+        user = User(email=email, password_hash=generate_password_hash(password))
+        # user.set_password(password)
 
         db.session.add(user)
         db.session.commit()
@@ -75,9 +79,10 @@ def login_process():
     email = request.form.get('email')
     password = request.form.get('password')
     #search for user in database 
-    user_query = User.query.filter(User.email == email, User.password == password).first()
+    user_query = User.query.filter(User.email == email).first()
+    
     #if use in database add then to session
-    if user_query != None: 
+    if user_query != None and check_password_hash(user_query.password_hash, password): 
         session["username"] = email
         session["user_id"] = user_query.user_id
         print(session["username"])
@@ -91,9 +96,10 @@ def login_process():
 
 @app.route("/logout")
 def logout_process():
-
-    session.pop("username")
-
+    if "username" in session:
+        print(session["username"])
+        session.pop("username")
+    flash("You're not logged in. Please login or signup")
     return redirect("/")
 
 
@@ -101,21 +107,21 @@ def logout_process():
 def save_process():
 
     # get data from frontend
-    # print("LOOOOK  AT ME !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+    print("LOOOOK  AT ME !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
     saved_melody = request.form.get("savedMelody")
+    print(saved_melody)
     title = request.form.get("title")
+ 
     print(title)
     # print(jsdata)
     # make data a string
-    saved_melody = str(save_melody)
+    saved_melody = str(saved_melody)
     # print(jsdata)
     print(session["username"])
     # if there is data add it to database
     if saved_melody != "None":
-        email = session["username"]
+        user_id= session["user_id"]
         # print(email)
-        user_query = User.query.filter(User.email==email).first()
-        user_id = user_query.user_id
         new_music = SavedMusic(user_id=user_id, music_data=saved_melody, title=title )
         # print(new_music)
         db.session.add(new_music)

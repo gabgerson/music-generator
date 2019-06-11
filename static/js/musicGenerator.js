@@ -31,7 +31,7 @@ let visualizer = new mm.PianoRollCanvasVisualizer(defaultSeed, canvasPianoRoll)
 
 //make visualzer redraw pitches while melody is playing and instantiate player
 // got this from Hello Magenta demo on glitch
-let pianoRollPlayer = new mm.Player(false, {
+let pianoRollPlayer = new mm.Player(false,{
     run: (note) => visualizer.redraw(note),
     stop: () => {console.log('done');}
   });
@@ -156,6 +156,7 @@ function saveToDatabase(evt) {
   function playSavedMusic(evt) {
     // get id off of button
     let eventId = event.target.id;
+    console.log(eventId)
     // console.log(eventId)
     // add melody- to eventId 
     let melodyObjId = "melody-" + eventId;
@@ -167,6 +168,13 @@ function saveToDatabase(evt) {
     // unquantize melody
     userMelody = mm.sequences.unquantizeSequence(userMelody);
     // redraw vizualizer with melody
-    pianoRoll = new mm.PianoRollCanvasVisualizer(userMelody, canvasPianoRoll);
+    visualizer = new mm.PianoRollCanvasVisualizer(userMelody, canvasPianoRoll);
     console.log(userMelody);
   }
+
+  savedMusicButtons = $(".saved-music-buttons")
+
+  savedMusicButtons.click(playSavedMusic)
+
+
+

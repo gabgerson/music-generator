@@ -14,7 +14,9 @@
   <!-- react strap cdn -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/reactstrap/4.8.0/reactstrap.min.js"></script>
   <!-- react file -->
-
+  {% if session.get('username') %}
+    <script>window.loggedIn=true;</script>
+  {% endif %}
   <!-- <script src="static/js/musicGenerator.js" type="text/javascript"></script> -->
   <script src="static/js/musicGenerator.jsx" type="text/babel" ></script>
 
@@ -55,21 +57,21 @@
         <!-- <button id="pause-button" type="button" class="btn-warning"><i class="fas fa-pause"></i> Pause</button> -->
         <!-- <button id="ai-play" type="button" onclick="generateMelody()"" class ="btn-success"><i class="fas fa-redo"></i> Generate Melody</button> -->
         <!-- <button id="ai-stop" type="button" class="btn-danger"><i class="fas fa-stop-circle"></i> Stop Ai</button> -->
-        {% if session.get('username') %}
+        <!-- {% if session.get('username') %}
           <form action="saved-melody.json" method = "POST">
             Title: <input type="text" id="title" required name="title">
             <button id="save" onclick="saveToDatabase()"type="submit"class="btn-warning"><i class="fas fa-save"></i> Save</button>
           </form>
           <h4 id="title-warning"></h4>
-        {% endif %}
+        {% endif %} -->
     </div>
   </div>
 
   {% if session.get('username') %}
         <p>wow i'm logged in so many cool melodies WOWOWOW</p>
-
+         
         {% for melody in user_melodies %}
-          <button onclick="playSavedMusic()" id="{{ melody.music_id }}">{{ melody.title}}</button>
+          <button class="saved-music-buttons" id="{{ melody.music_id }}">{{ melody.title}}</button>
           <li hidden id="melody-{{ melody.music_id }}">{{ melody.music_data }}</li>
         {% endfor %}
       

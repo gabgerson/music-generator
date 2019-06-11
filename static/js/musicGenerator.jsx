@@ -21,6 +21,7 @@ class NoteRadios extends React.Component {
       startTime: this.props.position,
       endTime: this.props.position + 1,
     }
+    console.log(note)
     this.props.changeNote(this.props.position, note)
     console.log("you clicked this");
 
@@ -103,25 +104,23 @@ class NoteRadios extends React.Component {
             type="radio" 
             name={this.props.name} 
             data-note={note.note} 
-            className={this.props.className} 
+            className="note-radios"
             onChange={this.handleChange} 
             checked={isChecked} 
             value={note.value}
+
           />
-          {note.note}
+        <span>{note.note}</span>
         </label>
       );
     }
 
     return(
         // change this 
-      <div className = "pitch-buttons"> 
-        <div style={{
-            display: 'flex',
-            flexDirection: 'column'
-          }}>
+      <div className="pitch-buttons"> 
+        
           {noteRadios}
-        </div>  
+        
       </div>
     );
   }
@@ -145,10 +144,16 @@ class NoteDisplay extends React.Component {
 class ControlButtons extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            sample : undefined,
+            title : ""
+        }
         this.playStop = this.playStop.bind(this)
         this.stop = this.stop.bind(this)
         this.generateMelody = this.generateMelody.bind(this)
         this.quantizeSequence = this.quantizeSequence.bind(this)
+        this.getGeneratedMelodyTitle = this.getGeneratedMelodyTitle.bind(this)
+        this.saveToDatabase = this.saveToDatabase.bind(this)
         this.rnnCheckpoint = new mm.MusicRNN('https://storage.googleapis.com/magentadata/js/checkpoints/music_rnn/basic_rnn');
     }
     
@@ -192,37 +197,60 @@ class ControlButtons extends React.Component {
           .then((sample) => {
             
             visualizer = new mm.PianoRollCanvasVisualizer(sample, canvasPianoRoll)
-      
+
             pianoRollPlayer.start(sample)
-      
-            // console.log(sCheck);
-            //save generated melody to global variable
-            // sam = sample;
+            
+            let controlButtonStateCopy = jQuery.extend(true, {}, this.state)
+
+            controlButtonStateCopy.sample = sample
+            this.setState(controlButtonStateCopy)
             console.log(sample);
-          //start playing generated melody
-            // musicAiPlayer.start(sample);
-      
-            const save = $('#save');
-            save.click((evt) => {
-              const url="/save-melody.json";
-              evt.preventDefault()
-              let title = $("#title").val()
-              // console.log(title + "ads")
-              let savedMelody = sample;
-              // console.log(sam);
-              savedMelody = JSON.stringify(savedMelody);
-              // console.log(savedMelody);
-              if (title === "") {
-                alert("Please add a title.");
-              }else{
-              $.post( url, {
-                "savedMelody": savedMelody,
-                "title": title
-              });}
-            });
           })}
+        
+        getGeneratedMelodyTitle(evt) {
+            this.setState({
+                title: evt.target.value
+                }
+            )
+        }
+        saveToDatabase(evt) {
+            const url="/save-melody.json";
+            evt.preventDefault()
+            let title = this.state.title
+            // console.log(title + "ads")
+            let savedMelody = this.state.sample;
+            // console.log(sam);
+            savedMelody = JSON.stringify(savedMelody);
+            // console.log(savedMelody);
+            if (this.state.sample === undefined) {
+                alert("Please generate a melody.");
+            } else if (title === "") {
+              alert("Please add a title.");
+            } else{
+            $.post( url, {
+              "savedMelody": savedMelody,
+              "title": title
+            });}
+          }
+
+
        
     render() {
+        let saveForm = null;
+        if(window.loggedIn) {
+            saveForm = (
+            <div>
+              <form action="saved-melody.json" method = "POST">
+               <label htmlFor="">
+                Title: <input type="text" id="title" value={this.state.title} onChange={this.getGeneratedMelodyTitle} required name="title"/> 
+               </label>              
+               <label htmlFor="save-button">
+                <button id="save" type="button" onClick={this.saveToDatabase}><i className="fas fa-redo"></i> Save</button>
+               </label> 
+              </form>
+            </div>
+            );
+        }
         return(
             <div>
               <label htmlFor="play-button">
@@ -235,11 +263,19 @@ class ControlButtons extends React.Component {
                 </button>
               </label>
               <label htmlFor="stop-button">
-                <button id="stop-button" type="button" onClick={this.stop}><i className="fas fa-stop-circle"></i>Stop</button>
+                <button id="stop-button" 
+                type="button" 
+                onClick={this.stop}>
+                <i className="fas fa-stop-circle"></i>
+                Stop</button>
               </label>
-              <label htmlFor="generate-melody">
-                <button id="generate-melody" type="button" onClick={this.generateMelody}><i className="fas fa-redo"></i> Generate Melody</button>
+              <label htmlFor="generate-melody-button">
+                <button id="generate-melody" 
+                type="button" 
+                onClick={this.generateMelody}><i className="fas fa-redo"></i> 
+                Generate Melody</button>
               </label>
+              {saveForm}
             </div>
         )
     }
@@ -261,64 +297,77 @@ class App extends React.Component {
           endTime: 1.0
         },
       ],
-     seed: {notes:[
-        {endTime: 1, pitch: 55, startTime: 0},
-        {endTime: 2, pitch: 48, startTime: 1},
-        {endTime: 3, pitch: 57, startTime: 2},
-        {endTime: 4, pitch: 53, startTime: 3},
-        {endTime: 5, pitch: 52, startTime: 4},
-        {endTime: 6, pitch: 48, startTime: 5},
-        {endTime: 7, pitch: 50, startTime: 6},
-        {endTime: 8, pitch: 55, startTime: 7}],
-        totalTime:8}
 
     };
     this.pianoRollCanvas = React.createRef();
     this.addNote = this.addNote.bind(this);
+    this.deleteNote = this.deleteNote.bind(this);
     this.changeNote = this.changeNote.bind(this);
-    
-
 
   }
-  componentDidMount() {
-    let visualizer = new mm.PianoRollCanvasVisualizer(this.state.seed, this.pianoRollCanvas.current)
-    pianoRollPlayer = new mm.Player(false, {
-        run: (note) => visualizer.redraw(note),
-        stop: () => {console.log('done');}
-      });
-  }
+  
+
   changeNote(position, note) { //deep copy
-    let stateCopy = Object.assign({}, this.state)
+    console.log(JSON.stringify(note) +" this from top of change note")
+    let stateCopy = $.extend(true, {}, this.state)
     stateCopy.notes[position] = note;
     this.setState(stateCopy)  
     let totalTime = this.state.notes.slice(-1)
     totalTime = totalTime[0]["endTime"]
+    console.log(this.state.notes)
+    
     userMelody = {
-                   notes: this.state.notes,
-                   totalTime: totalTime  
-                  }
-   visualizer = new mm.PianoRollCanvasVisualizer(userMelody, this.pianoRollCanvas.current) 
-    // console.log(this.state.notes+ "from change note")
-    // console.log(JSON.stringify(userMelody) +" "+"this is user Melody from change note")
+        notes: stateCopy.notes,
+        totalTime: totalTime  
+       }
+    visualizer = new mm.PianoRollCanvasVisualizer(userMelody, this.pianoRollCanvas.current) 
+    
+    console.log(JSON.stringify(stateCopy.notes)+ " " + "from change note")
+    console.log(JSON.stringify(userMelody) +" "+"this is user Melody from change note")
   }
- 
+//    updateVisualizer(){
+
+//    }
+
+   
   addNote(evt) {
     this.setState((prevState) => {
-      const end = this.state.notes.slice(-1)
-    //   console.log( end[0].startTime, end[0].endTime)
-    //   console.log(this.state)
       
-          
+      
+      let end = this.state.notes.slice(-1)
+      
+     
+      console.log(end)
+      if (end === []){
+          end = 0
+      } else { end = end[0].endTime}
+      console.log(end)
       return {
         
         notes: prevState.notes.concat([ { 
                                           noteName: "C3",
                                           pitch: 48, 
-                                          startTime: end[0].endTime, // get the endime form the last item in this.state.notes to use as startTime for next note 
-                                          endTime: end[0].endTime + 1 } ]) // add one to get endtime for added note
+                                          startTime: end, // get the endime form the last item in this.state.notes to use as startTime for next note 
+                                          endTime: end + 1 } ]) // add one to get endtime for added note
       };
 
     });
+  }
+
+  deleteNote(evt) {
+    if(this.state.notes.length > 1) {
+    let deleteNoteStateCopy = $.extend(true, {}, this.state)
+    deleteNoteStateCopy.notes.pop()
+    this.setState(deleteNoteStateCopy)
+    let totalTime = deleteNoteStateCopy.notes.slice(-1)
+    console.log(totalTime)
+         totalTime = totalTime[0]["endTime"]
+    userMelody = {
+        notes: deleteNoteStateCopy.notes,
+        totalTime: totalTime  
+    }
+    visualizer = new mm.PianoRollCanvasVisualizer(userMelody, this.pianoRollCanvas.current) 
+  }
   }
 //   getCanvasRef(){
 //       return this.pianoRollCanvas
@@ -328,8 +377,7 @@ class App extends React.Component {
     const noteDisplay = [];
     let position = 0;
     for (const note of this.state.notes) {
-      currNotes.push(<NoteRadios 
-                      className={position} 
+      currNotes.push(<NoteRadios  
                       name={position} 
                       currentNotePitch={note.pitch} 
                       changeNote={this.changeNote} 
@@ -344,6 +392,7 @@ class App extends React.Component {
     return (
       <div>
         <button onClick={this.addNote}>Add Note</button>
+        <button onClick={this.deleteNote}> Delete Note</button>
         <p>Hello I am the app component</p>
         <div>
           {currNotes}
@@ -355,7 +404,7 @@ class App extends React.Component {
           <canvas ref={this.pianoRollCanvas}></canvas>
         </div>
         <div>
-            <ControlButtons pianoRollCanvas={this.pianoRollCanvas}/>
+            <ControlButtons/>
         </div>
       </div>  
     );
