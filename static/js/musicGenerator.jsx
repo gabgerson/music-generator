@@ -42,55 +42,68 @@ class NoteRadios extends React.Component {
     const notes = [
       {
         note: "C4",
-        value: 60
+        value: 60,
+        className: "note-radios"
       },
       {
         note: "B3",
-        value: 59
+        value: 59,
+        className: "note-radios"
       },
       {
         note: "A#/Bb3",
-        value: 58
+        value: 58,
+        className: "note-radios black-keys"
       },
       {
         note: "A3",
-        value: 57
+        value: 57,
+        className: "note-radios"
       },
       {
         note: "G#/Ab3",
-        value: 56
+        value: 56,
+        className: "black-keys"
       },
       {
         note: "G3",
-        value: 55
+        value: 55,
+        className: "note-radios"
       },
       {
         note: "F#/Gb3",
-        value: 54
+        value: 54,
+        className: "black-keys"
       },
       {
         note: "F3",
-        value: 53
+        value: 53,
+        className: "note-radios"
       },
       {
         note: "E3",
-        value: 52
+        value: 52,
+        className: "note-radios"
       },
       {
         note: "D#/Eb3",
-        value: 51
+        value: 51,
+        className: "black-keys"
       },
       {
         note: "D3",
-        value: 50
+        value: 50,
+        className: "note-radios"
       },
       {
         note: "C#/Db3",
-        value: 49
+        value: 49,
+        className: "black-keys"
       },
       {
         note: "C3",
-        value: 48
+        value: 48,
+        className: "note-radios"
       },
 
     ];
@@ -99,15 +112,16 @@ class NoteRadios extends React.Component {
     for (const note of notes) {
       const isChecked = this.state.currentNotePitch === note.note;
       noteRadios.push(
-        <label>
+        <label className={note.className}>
           <input 
             type="radio" 
             name={this.props.name} 
             data-note={note.note} 
-            className="note-radios"
+            className={note.className}
             onChange={this.handleChange} 
             checked={isChecked} 
             value={note.value}
+            id="black"
 
           />
         <span>{note.note}</span>
@@ -394,7 +408,7 @@ class App extends React.Component {
         <button onClick={this.addNote}>Add Note</button>
         <button onClick={this.deleteNote}> Delete Note</button>
         <p>Hello I am the app component</p>
-        <div>
+        <div className="test-class">
           {currNotes}
         </div>
         <div>

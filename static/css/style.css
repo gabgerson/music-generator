@@ -1,17 +1,26 @@
 
+h1 {
+    justify-content: center;
+    font-family: "Roboto Mono";
+    font-size: 4em;
+    text-transform: uppercase; 
+}
 
 .pitch-buttons {
     display: inline-flex;
     flex-direction: column;
 }
 
+.test-class .pitch-buttons .black-keys {
+    background-color: black;
+}
 
 
 .pitch-buttons label {
     float:left;
     width:70px;
     margin:0px;
-    background-color:#FFFFFF;
+    background-color:#F2F2F2;
     border-radius:4px;
     border:1px solid #D0D0D0;
     overflow:auto;
@@ -25,7 +34,7 @@
 }
 
 .pitch-buttons label input {
-    position:absolute;
+    position:fixed;
     top:-20px;
 }
 
