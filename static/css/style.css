@@ -1,31 +1,86 @@
 
-h1 {
-    justify-content: center;
-    font-family: "Roboto Mono";
-    font-size: 4em;
-    text-transform: uppercase; 
+
+
+body {
+    background-color: #ffc0ba;
+    
+/*     background-image: linear-gradient(to right,#dcc7cf ,#e8bdcf, #cccccc); */
+    
+    font-family: "Nanum Gothic"
 }
 
+h2 {
+    display: flex;
+    justify-content: center;
+ 
+}
+
+.headline{
+    display:flex;
+    justify-content: center;
+    margin: 40px 0px 10px 0px;
+}
+
+
+h4 {
+    display: flex;
+    justify-content:center;
+    margin: 50px 0px 30px 16px;
+}
+
+/* all pages */
+#nav-bar {
+    
+    background-color: #262626;
+}
+
+#nav-bar a {
+    color: #ffffff;
+    justify-content: left;
+}
+
+.nav-item {
+    justify-content: left
+}
+
+/* homepage */
+.add-delete{
+    display:flex;
+    justify-content: center;
+    margin: 16px;
+    border-radius:4px;
+}
+
+
+#delete {
+    margin-left: 5px;
+/*     background-color: #f2f2f2; */
+}
+
+.curr-notes {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap
+}
 .pitch-buttons {
     display: inline-flex;
     flex-direction: column;
+    margin-top: 15px;
 }
-
-.test-class .pitch-buttons .black-keys {
-    background-color: black;
-}
-
 
 .pitch-buttons label {
     float:left;
     width:70px;
+/*     height: 20px; */
     margin:0px;
-    background-color:#F2F2F2;
+    background-color:#f2f2f2;
+    color:#f9ecec;
     border-radius:4px;
-    border:1px solid #D0D0D0;
+    border:1px solid #ffc0ba;
     overflow:auto;
        
 }
+
 .pitch-buttons label span {
     text-align:center;
     font-size: 14px;
@@ -36,33 +91,98 @@ h1 {
 .pitch-buttons label input {
     position:fixed;
     top:-20px;
+    visibility:hidden
 }
 
 .pitch-buttons input:checked + span {
-    background-color:#404040;
+    background-color: #757575;
     color:#F7F7F7;
 }
 
-/* .pitch-buttons .yellow {
-    background-color:#FFCC00;
-    color:#333;
+.pitch-buttons .black-keys {
+    background-color: #262626;
+    color:#262626;
+/*     height: 35px; */
+/* background-color: #F8F2E7; */
+
+}
+canvas {
+  border: solid 5px;
+  margin: 10px 0px 5px 16px;
+
 }
 
-#donate .blue {
-    background-color:#00BFFF;
-    color:#333;
+.canvas-roll {
+    display: flex;
+    justify-content: center;
 }
 
-#donate .pink {
-    background-color:#FF99FF;
-    color:#333;
+.note-display {
+    display: flex;
+    justify-content: center;
+    margin: 30px 0px 0px 16px;
+    font-size: 1.25em;
 }
 
-#donate .green {
-    background-color:#A3D900;
-    color:#333;
+/* for homepage title input */
+#title {
+    border-radius: 4px;
+    background-color:#f2f2f2
+} 
+
+#save {
+    border-radius: 4px;
+    margin-left: 5px
 }
-#donate .purple {
-    background-color:#B399FF;
-    color:#333;
-} */
+.app-control-btns {
+    display:flex;
+    justify-content: center;
+}
+.control-buttons {
+    margin: 5px;
+    border-radius: 4px;   
+    background-color: #f2f2f2
+}
+
+.control-buttons-div {
+    margin: 16px
+}
+
+
+.buttons-control {
+    background-color: #f2f2f2;
+}
+.buttons-control {
+    border-radius:4px;
+}
+
+.saved-melodies {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.saved-music-buttons{
+    border-radius: 4px;
+    margin: 20px 0px 0px 2px; 
+}
+
+/* login page */
+
+.login-form {
+    display: flex;
+    justify-content: center;
+}
+
+.login-input {
+    border-radius: 4px;
+    background-color: #f2f2f2;
+    margin: 5px 5px 10px 0px
+}
+
+
+p {
+    display: flex;
+    justify-content: center;
+
+}

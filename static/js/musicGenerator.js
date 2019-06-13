@@ -70,60 +70,56 @@ let rnn_steps = 100;
 let rnn_temperature = 1;
 
 // player for ai generated melody
-const musicAiPlayer = new mm.Player();
+// const musicAiPlayer = new mm.Player();
 
-// quantize melody and generate new one
-function quantizeSequence() {
-   let qns;
-   let seedSequence;
-    if (userMelody===undefined) {
+// // quantize melody and generate new one
+// function quantizeSequence() {
+//    let qns;
+//    let seedSequence;
+//     if (userMelody===undefined) {
    
-         qns = mm.sequences.quantizeNoteSequence(defaultSeed, 4);
-         console.log("using seed")
-          seedSequence="default seed"
-    }else {
-        qns = mm.sequences.quantizeNoteSequence(userMelody, 4);
-        console.log("using user_melody")
-         seedSequence="user melody"
-    } return qns
-  }
+//          qns = mm.sequences.quantizeNoteSequence(defaultSeed, 4);
+//           seedSequence="default seed"
+//     }else {
+//         qns = mm.sequences.quantizeNoteSequence(userMelody, 4);
+//          seedSequence="user melody"
+//     } return qns
+//   }
 
-function generateMelody(evt) {
+// function generateMelody(evt) {
 
-  const qns = quantizeSequence()
-  musicAi.continueSequence(qns, rnn_steps, rnn_temperature)
-    .then((sample) => {
+//   const qns = quantizeSequence()
+//   musicAi.continueSequence(qns, rnn_steps, rnn_temperature)
+//     .then((sample) => {
       
-      pianoRoll = new mm.PianoRollCanvasVisualizer(sample, canvasPianoRoll)
+//       pianoRoll = new mm.PianoRollCanvasVisualizer(sample, canvasPianoRoll)
 
-      pianoRollPlayer.start(sample)
+//       pianoRollPlayer.start(sample)
 
-      // console.log(sCheck);
-      //save generated melody to global variable
-      // sam = sample;
-      console.log(sample);
-    //start playing generated melody
-      // musicAiPlayer.start(sample);
+//       // console.log(sCheck);
 
-      const save = $('#save');
-      save.click((evt) => {
-        const url="/save-melody.json";
-        evt.preventDefault()
-        let title = $("#title").val()
-        // console.log(title + "ads")
-        let savedMelody = sample;
-        // console.log(sam);
-        savedMelody = JSON.stringify(savedMelody);
-        // console.log(savedMelody);
-        if (title === "") {
-          alert("Please add a title.");
-        }else{
-        $.post( url, {
-          "savedMelody": savedMelody,
-          "title": title
-        });}
-      });
-    })}
+//       console.log(sample);
+
+
+//         const save = $('#save');
+//         save.click((evt) => {
+//           const url="/save-melody.json";
+//           evt.preventDefault()
+//           let title = $("#title").val()
+        
+//           let savedMelody = sample;
+  
+//           savedMelody = JSON.stringify(savedMelody);
+
+//           if (title === "") {
+//             alert("Please add a title.");
+//           }else{
+//           $.post( url, {
+//             "savedMelody": savedMelody,
+//             "title": title
+//           });}
+//         });
+//       })}
   
 //select save button
 
@@ -139,11 +135,11 @@ function saveToDatabase(evt) {
   const save = $('#save');
   evt.preventDefault()
   let title = $("#title").val()
-  // console.log(title + "ads")
+
   let savedMelody = sample;
-  // console.log(sam);
+
   savedMelody = JSON.stringify(savedMelody);
-  // console.log(savedMelody);
+
   if (title === "") {
     alert("Please add a title.");
   }else{
@@ -156,11 +152,9 @@ function saveToDatabase(evt) {
   function playSavedMusic(evt) {
     // get id off of button
     let eventId = event.target.id;
-    console.log(eventId)
-    // console.log(eventId)
+
     // add melody- to eventId 
     let melodyObjId = "melody-" + eventId;
-    // console.log(melodyObjId);
     // select the element that contains the melody object
     melodyObjId=document.getElementById(melodyObjId);
     //turn into JSON 
@@ -169,10 +163,9 @@ function saveToDatabase(evt) {
     userMelody = mm.sequences.unquantizeSequence(userMelody);
     // redraw vizualizer with melody
     visualizer = new mm.PianoRollCanvasVisualizer(userMelody, canvasPianoRoll);
-    console.log(userMelody);
   }
 
-  savedMusicButtons = $(".saved-music-buttons")
+  const savedMusicButtons = $(".saved-music-buttons")
 
   savedMusicButtons.click(playSavedMusic)
 

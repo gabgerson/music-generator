@@ -45,7 +45,9 @@
 
 
   <!-- piano roll goes below -->
-  <canvas id="piano-roll"></canvas>
+  <div class="canvas-roll">
+    <canvas  id="piano-roll"></canvas>
+  </div>
   <div class="container-fluid">
     <!-- control buttons -->
 <!-- <div id="basic-buttons"> -->
@@ -65,12 +67,13 @@
   </div>
 
   {% if session.get('username') %}
-        <p>wow i'm logged in so many cool melodies WOWOWOW</p>
-         
-        {% for melody in user_melodies %}
-          <button class="saved-music-buttons" id="{{ melody.music_id }}">{{ melody.title}}</button>
-          <li hidden id="melody-{{ melody.music_id }}">{{ melody.music_data }}</li>
-        {% endfor %}
+    <div class="saved-melodies">
+      {% for melody in user_melodies %}
+          
+        <button class="saved-music-buttons" id="{{ melody.music_id }}">{{ melody.title}}</button>
+        <li hidden id="melody-{{ melody.music_id }}">{{ melody.music_data }}</li>
+      {% endfor %}
+    </div>
       
   {% endif %}
 

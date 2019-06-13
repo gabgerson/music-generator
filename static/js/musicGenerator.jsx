@@ -207,6 +207,7 @@ class ControlButtons extends React.Component {
        generateMelody(evt) {
 
         const qns = this.quantizeSequence()
+        
         musicAi.continueSequence(qns, rnn_steps, rnn_temperature)
           .then((sample) => {
             
@@ -255,7 +256,7 @@ class ControlButtons extends React.Component {
             saveForm = (
             <div>
               <form action="saved-melody.json" method = "POST">
-               <label htmlFor="">
+               <label htmlFor="title">
                 Title: <input type="text" id="title" value={this.state.title} onChange={this.getGeneratedMelodyTitle} required name="title"/> 
                </label>              
                <label htmlFor="save-button">
@@ -266,28 +267,25 @@ class ControlButtons extends React.Component {
             );
         }
         return(
-            <div>
+            <div className="control-buttons-div">
               <label htmlFor="play-button">
-                <button id="play-button" 
+                <button className="control-buttons" id="play-button" 
                         type="button"
                         onClick={this.playStop}
                         >
-                        <i className="fas fa-play-circle"></i> 
-                        Play
+                        <i className="fas fa-play-circle"></i> Play
                 </button>
               </label>
               <label htmlFor="stop-button">
-                <button id="stop-button" 
+                <button className="control-buttons" id="stop-button" 
                 type="button" 
                 onClick={this.stop}>
-                <i className="fas fa-stop-circle"></i>
-                Stop</button>
+                <i className="fas fa-stop-circle"></i> Stop</button>
               </label>
               <label htmlFor="generate-melody-button">
-                <button id="generate-melody" 
+                <button className="control-buttons" id="generate-melody" 
                 type="button" 
-                onClick={this.generateMelody}><i className="fas fa-redo"></i> 
-                Generate Melody</button>
+                onClick={this.generateMelody}><i className="fas fa-redo"></i> Generate Melody</button>
               </label>
               {saveForm}
             </div>
@@ -309,6 +307,48 @@ class App extends React.Component {
           pitch: 48,
           startTime: 0.0,
           endTime: 1.0
+        },
+        { 
+          noteName: "C3",
+          pitch: 48,
+          startTime: 1.0,
+          endTime: 2.0
+        },
+        { 
+          noteName: "C3",
+          pitch: 48,
+          startTime: 2.0,
+          endTime: 3.0
+        },
+        { 
+          noteName: "C3",
+          pitch: 48,
+          startTime: 3.0,
+          endTime: 4.0
+        },
+        { 
+          noteName: "C3",
+          pitch: 48,
+          startTime: 4.0,
+          endTime: 5.0
+        },
+        { 
+          noteName: "C3",
+          pitch: 48,
+          startTime: 5.0,
+          endTime: 6.0
+        },
+        { 
+          noteName: "C3",
+          pitch: 48,
+          startTime: 6.0,
+          endTime: 7.0
+        },
+        { 
+          noteName: "C3",
+          pitch: 48,
+          startTime: 7.0,
+          endTime: 8.0
         },
       ],
 
@@ -405,19 +445,20 @@ class App extends React.Component {
     
     return (
       <div>
-        <button onClick={this.addNote}>Add Note</button>
-        <button onClick={this.deleteNote}> Delete Note</button>
-        <p>Hello I am the app component</p>
-        <div className="test-class">
+        <div className="add-delete">
+          <button className="buttons-control" onClick={this.addNote}>Add Note</button>
+          <button className="buttons-control" id="delete" onClick={this.deleteNote}> Delete Note</button>
+        </div>
+        <div className="curr-notes">
           {currNotes}
         </div>
-        <div>
-          {noteDisplay}
+        <div className="note-display">
+        {noteDisplay}
         </div>
-        <div>
+        <div className="canvas-roll">
           <canvas ref={this.pianoRollCanvas}></canvas>
         </div>
-        <div>
+        <div className="app-control-btns">
             <ControlButtons/>
         </div>
       </div>  

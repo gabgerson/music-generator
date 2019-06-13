@@ -27,12 +27,10 @@ def index():
         # query databaste to get user_id will refactor later
         user_query= User.query.filter(User.email==email).first()
         user_id = user_query.user_id
-        print(user_id)
         # get user's saved music
         user_melodies = SavedMusic.query.filter(SavedMusic.user_id==user_id).all()
         # if they have melodies send melodies with homepage
         if user_melodies != None:
-            print(user_melodies)
             return render_template("homepage.html", user_melodies = user_melodies)
 
     return render_template("homepage.html")
@@ -85,8 +83,6 @@ def login_process():
     if user_query != None and check_password_hash(user_query.password_hash, password): 
         session["username"] = email
         session["user_id"] = user_query.user_id
-        print(session["username"])
-        print(session["user_id"])
         flash('Logged in')
         user_id = user_query.user_id
         return redirect("/")
@@ -97,9 +93,8 @@ def login_process():
 @app.route("/logout")
 def logout_process():
     if "username" in session:
-        print(session["username"])
         session.pop("username")
-    flash("You're not logged in. Please login or signup")
+    # flash("You're not logged in. Please login or signup")
     return redirect("/")
 
 
@@ -107,38 +102,36 @@ def logout_process():
 def save_process():
 
     # get data from frontend
-    print("LOOOOK  AT ME !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
     saved_melody = request.form.get("savedMelody")
-    print(saved_melody)
     title = request.form.get("title")
  
-    print(title)
-    # print(jsdata)
     # make data a string
     saved_melody = str(saved_melody)
-    # print(jsdata)
-    print(session["username"])
+   
     # if there is data add it to database
     if saved_melody != "None":
-        user_id= session["user_id"]
-        # print(email)
+        user_id = session["user_id"]
+
         new_music = SavedMusic(user_id=user_id, music_data=saved_melody, title=title )
-        # print(new_music)
+
         db.session.add(new_music)
         db.session.commit()
-    return redirect("/") #don't go here will add none melody to database
+    return redirect("/")
 
+@app.route("/about")
+def show_about_page():
 
+    return render_template("about.html")
 
 if __name__ == "__main__":
 
     import sys
     if sys.argv[-1] == "jstest":
-        JS_TESTING_MODE = True
+        JS_TESTING_MODE = False
     # We have to set debug=True here, since it has to be True at the
     
     # point that we invoke the DebugToolbarExtension
-    app.debug = True
+    app.debug = False
     # make sure templates, etc. are not cached in debug mode
     app.jinja_env.auto_reload = app.debug
 
