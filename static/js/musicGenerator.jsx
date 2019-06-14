@@ -13,7 +13,6 @@ class NoteRadios extends React.Component {
 
 
   updateNoteDisplay(evt) {
-    console.log(evt)
     this.setState({currentNotePitch: evt.target.dataset.note})
     const note = {
       noteName: evt.target.dataset.note,
@@ -21,11 +20,9 @@ class NoteRadios extends React.Component {
       startTime: this.props.position,
       endTime: this.props.position + 1,
     }
-    console.log(note)
-    this.props.changeNote(this.props.position, note)
-    console.log("you clicked this");
 
-    console.log(this.props.position + "this is position")
+    this.props.changeNote(this.props.position, note)
+ 
   }
    
   // pianoRoll = new mm.PianoRollCanvasVisualizer(userMelody, this.pianoRollCanvas.current);
@@ -148,8 +145,7 @@ class NoteDisplay extends React.Component {
 
   render() {
     return(
-      <label name="note-span" htmlFor={this.props.id}>
-        <span id={this.props.id}>{this.props.name}</span>|
+      <label name="note-span" htmlFor={this.props.id}><span id={this.props.id}>{this.props.name}</span> |&nbsp;
       </label>
     )
   }
@@ -160,7 +156,8 @@ class ControlButtons extends React.Component {
         super(props);
         this.state = {
             sample : undefined,
-            title : ""
+            title : "",
+            isNotLoading : true
         }
         this.playStop = this.playStop.bind(this)
         this.stop = this.stop.bind(this)
@@ -168,6 +165,7 @@ class ControlButtons extends React.Component {
         this.quantizeSequence = this.quantizeSequence.bind(this)
         this.getGeneratedMelodyTitle = this.getGeneratedMelodyTitle.bind(this)
         this.saveToDatabase = this.saveToDatabase.bind(this)
+        this.displayLoader = this.displayLoader.bind(this)
         this.rnnCheckpoint = new mm.MusicRNN('https://storage.googleapis.com/magentadata/js/checkpoints/music_rnn/basic_rnn');
     }
     
@@ -189,6 +187,11 @@ class ControlButtons extends React.Component {
             pianoRollPlayer.stop();
           }}
 
+    displayLoader(bool) {
+            let displayLoaderStateCopy = jQuery.extend(true, {}, this.state)
+            displayLoaderStateCopy.isNotLoading = bool
+            this.setState(displayLoaderStateCopy)    
+    }
 
     quantizeSequence() {
         let quantizedS;
@@ -196,30 +199,39 @@ class ControlButtons extends React.Component {
          if (userMelody===undefined) {
         
               quantizedS = mm.sequences.quantizeNoteSequence(defaultSeed, 4);
-              console.log("using seed")
+
                seedSequence="default seed"
          }else {
              quantizedS = mm.sequences.quantizeNoteSequence(userMelody, 4);
-             console.log("using user_melody")
+       
               seedSequence="user melody"
          } return quantizedS
        }
-       generateMelody(evt) {
 
-        const qns = this.quantizeSequence()
-        
+    generateMelody(evt) {
+
+        const qns = this.quantizeSequence();
+    
+        this.displayLoader(false)
+       
         musicAi.continueSequence(qns, rnn_steps, rnn_temperature)
           .then((sample) => {
+
+            this.displayLoader(true)
+            let controlButtonStateCopy = jQuery.extend(true, {}, this.state)
+        
             
+            controlButtonStateCopy.sample = sample
+            
+    
             visualizer = new mm.PianoRollCanvasVisualizer(sample, canvasPianoRoll)
 
             pianoRollPlayer.start(sample)
             
-            let controlButtonStateCopy = jQuery.extend(true, {}, this.state)
-
-            controlButtonStateCopy.sample = sample
             this.setState(controlButtonStateCopy)
-            console.log(sample);
+
+            
+      
           })}
         
         getGeneratedMelodyTitle(evt) {
@@ -232,11 +244,11 @@ class ControlButtons extends React.Component {
             const url="/save-melody.json";
             evt.preventDefault()
             let title = this.state.title
-            // console.log(title + "ads")
+    
             let savedMelody = this.state.sample;
-            // console.log(sam);
+
             savedMelody = JSON.stringify(savedMelody);
-            // console.log(savedMelody);
+
             if (this.state.sample === undefined) {
                 alert("Please generate a melody.");
             } else if (title === "") {
@@ -287,6 +299,7 @@ class ControlButtons extends React.Component {
                 type="button" 
                 onClick={this.generateMelody}><i className="fas fa-redo"></i> Generate Melody</button>
               </label>
+              <span id="loader" hidden={this.state.isNotLoading}>Loading...<img src="/static/img/quarter_note-svg.gif" alt=""/></span>
               {saveForm}
             </div>
         )
@@ -362,13 +375,13 @@ class App extends React.Component {
   
 
   changeNote(position, note) { //deep copy
-    console.log(JSON.stringify(note) +" this from top of change note")
+
     let stateCopy = $.extend(true, {}, this.state)
     stateCopy.notes[position] = note;
     this.setState(stateCopy)  
     let totalTime = this.state.notes.slice(-1)
     totalTime = totalTime[0]["endTime"]
-    console.log(this.state.notes)
+  
     
     userMelody = {
         notes: stateCopy.notes,
@@ -376,26 +389,19 @@ class App extends React.Component {
        }
     visualizer = new mm.PianoRollCanvasVisualizer(userMelody, this.pianoRollCanvas.current) 
     
-    console.log(JSON.stringify(stateCopy.notes)+ " " + "from change note")
-    console.log(JSON.stringify(userMelody) +" "+"this is user Melody from change note")
   }
-//    updateVisualizer(){
 
-//    }
 
    
   addNote(evt) {
     this.setState((prevState) => {
       
-      
       let end = this.state.notes.slice(-1)
       
-     
-      console.log(end)
       if (end === []){
           end = 0
       } else { end = end[0].endTime}
-      console.log(end)
+    
       return {
         
         notes: prevState.notes.concat([ { 
@@ -409,12 +415,17 @@ class App extends React.Component {
   }
 
   deleteNote(evt) {
+
     if(this.state.notes.length > 1) {
+
     let deleteNoteStateCopy = $.extend(true, {}, this.state)
+
     deleteNoteStateCopy.notes.pop()
+
     this.setState(deleteNoteStateCopy)
+
     let totalTime = deleteNoteStateCopy.notes.slice(-1)
-    console.log(totalTime)
+
          totalTime = totalTime[0]["endTime"]
     userMelody = {
         notes: deleteNoteStateCopy.notes,
@@ -423,9 +434,7 @@ class App extends React.Component {
     visualizer = new mm.PianoRollCanvasVisualizer(userMelody, this.pianoRollCanvas.current) 
   }
   }
-//   getCanvasRef(){
-//       return this.pianoRollCanvas
-//   }
+
   render() {
     const currNotes = [];
     const noteDisplay = [];

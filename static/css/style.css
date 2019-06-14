@@ -74,7 +74,7 @@ h4 {
 /*     height: 20px; */
     margin:0px;
     background-color:#f2f2f2;
-    color:#f9ecec;
+    color:#f2f2f2;
     border-radius:4px;
     border:1px solid #ffc0ba;
     overflow:auto;
@@ -185,4 +185,13 @@ p {
     display: flex;
     justify-content: center;
 
+}
+
+img {
+  width: 50px
+}
+
+
+#loader {
+    margin: 10px
 }
