@@ -57,11 +57,6 @@ class MusicTests(unittest.TestCase):
 #         db.session.close()
 #         db.drop_all()
 
-    # def test_games(self):
-    #     """Test departments page."""
-
-    #     result = self.client.get("/games")
-    #     self.assertIn(b"Power Grid", result.data)
 
 
 if __name__ == "__main__":
