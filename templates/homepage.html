@@ -26,7 +26,18 @@
 
 {% block body %}
   
-  <h4>Choose Some Notes</h4>
+  <h4>Choose a note from each column to make a melody.</h4>
+  <div id="home-explain">
+    <pre>
+      Each column represents a quarter note.
+      Add or delete notes with the add and delete buttons. 
+      Click the play button to play your melody and
+      the stop button to stop your melody.
+      Click the generate melody button to create a new melody using 
+      Google's open source machine learning project Magenta.
+      Sign up to save your generated melodies.
+    </pre>
+  </div>
   <div id="show-pitches"><!-- display react radio buttons here --></div>
   <!-- ♩ -->
   <!-- display -->
@@ -36,14 +47,17 @@
 
 
   <!-- piano roll goes below -->
-  <div id="loading"></div>
+  <div id="gen-melo">Generated melody:</div>
   <div class="canvas-roll">
+    
     <canvas  id="piano-roll"></canvas>
   </div>
 
-
   {% if session.get('username') %}
+
+  <div id="your-saves">Your saved melodies:</div>
     <div class="saved-melodies">
+      
       {% for melody in user_melodies %}
           
         <button class="saved-music-buttons" id="{{ melody.music_id }}">{{ melody.title}}</button>

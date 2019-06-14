@@ -94,7 +94,7 @@ def login_process():
 def logout_process():
     if "username" in session:
         session.pop("username")
-    # flash("You're not logged in. Please login or signup")
+    flash("Logged Out")
     return redirect("/")
 
 

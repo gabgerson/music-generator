@@ -132,7 +132,8 @@ canvas {
 
 #save {
     border-radius: 4px;
-    margin-left: 5px
+    margin-left: 5px;
+    background: #f2f2f2;
 }
 .app-control-btns {
     display:flex;
@@ -195,3 +196,28 @@ img {
 #loader {
     margin: 10px
 }
+
+#gen-melo {
+    text-align: center;
+    margin: 0px 0px 10px 0px;
+}
+
+
+#home-explain {
+    text-align: center;
+}
+
+
+#your-saves {
+    text-align: center;
+    margin: 20px 0px 0px 0px;
+}
+
+#add-title {
+    margin: 0px 0px 5px 0px
+}
+.alert-dark {
+    background-color: #a7acaf
+
+}
+

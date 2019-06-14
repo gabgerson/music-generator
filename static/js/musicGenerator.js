@@ -67,7 +67,7 @@ const musicAi = new mm.MusicRNN('https://storage.googleapis.com/magentadata/js/c
 // how long the generated melody will be
 let rnn_steps = 100;
 //how random the generated melody will be
-let rnn_temperature = 1;
+let rnn_temperature = 1.5;
 
 // player for ai generated melody
 // const musicAiPlayer = new mm.Player();

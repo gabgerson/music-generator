@@ -267,12 +267,14 @@ class ControlButtons extends React.Component {
         if(window.loggedIn) {
             saveForm = (
             <div>
+                <div id="add-title">Add a title to your generated melody:</div>
               <form action="saved-melody.json" method = "POST">
                <label htmlFor="title">
-                Title: <input type="text" id="title" value={this.state.title} onChange={this.getGeneratedMelodyTitle} required name="title"/> 
+               
+               <input type="text" id="title" value={this.state.title} onChange={this.getGeneratedMelodyTitle} required name="title"/> 
                </label>              
                <label htmlFor="save-button">
-                <button id="save" type="button" onClick={this.saveToDatabase}><i className="fas fa-redo"></i> Save</button>
+                <button id="save" type="button" onClick={this.saveToDatabase}><i class="fas fa-save"></i> Save</button>
                </label> 
               </form>
             </div>
@@ -461,10 +463,13 @@ class App extends React.Component {
         <div className="curr-notes">
           {currNotes}
         </div>
+        
         <div className="note-display">
+        Your Melody:&nbsp;
         {noteDisplay}
         </div>
         <div className="canvas-roll">
+          
           <canvas ref={this.pianoRollCanvas}></canvas>
         </div>
         <div className="app-control-btns">

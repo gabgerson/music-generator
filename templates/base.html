@@ -16,9 +16,8 @@
     
     </head>
     <body>
-
-
-      <nav class="navbar sticky-top navbar-expand-lg" id ="nav-bar">
+      
+      <nav class="navbar navbar-dark sticky-top navbar-expand-lg" id ="nav-bar">
         <a class="navbar-brand" href="/">Melodia</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -46,15 +45,25 @@
           </ul>
         </div>
      </nav>
+     {% with messages = get_flashed_messages() %}
+     {% if messages %}
+     {% for message in messages %}
+         <div class=" alert alert-dark alert-dismissible fade show" role="alert">
+         <button type="button" class="close" id="flash-message" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+         {{message}}
+         </div>
+     {% endfor %}
+     {% endif %}
+     {% endwith %}
 
       {% block body %}
       {% endblock %}
       
-      <ul>
+      <!-- <ul>
           {% for message in get_flashed_messages() %}
               <li>{{ message }}</li>
           {% endfor %}
-      </ul>
+      </ul> -->
       <!-- jquery cdn -->
      <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>    
      <!-- bootstap javascript -->
