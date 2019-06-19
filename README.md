@@ -6,7 +6,7 @@ Melodia is a web app that invites the user to create a melody and use Google's o
 
 __Frontend:__ React, Javascript, jQuery, HTML, CSS, Bootstrap
 
-__Backend:__ Flask, Jinja,SQL, SQL Alchemy, PostgreSQL, Python
+__Backend:__ Flask, Jinja, SQL, SQL Alchemy, PostgreSQL, Python
 
 
 ## Features
