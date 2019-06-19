@@ -33,6 +33,7 @@ New melodies can be created by clicking on the generate melody button
 ### Requirements
 
 * PostgreSQL
+* Python 3.6
 
 
 __Clone Repository:__
