@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %} Music Generator {% endblock %}
+{% block title %} Melodia {% endblock %}
 <!-- <link rel="stylesheet" href="/static/style.css">    -->
 
 {% block js %}
@@ -11,13 +11,10 @@
   <!-- react cdn -->
   <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
   <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
-  <!-- react strap cdn -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/reactstrap/4.8.0/reactstrap.min.js"></script>
   <!-- react file -->
   {% if session.get('username') %}
     <script>window.loggedIn=true;</script>
   {% endif %}
-  <!-- <script src="static/js/musicGenerator.js" type="text/javascript"></script> -->
   <script src="static/js/musicGenerator.jsx" type="text/babel" ></script>
 
 
@@ -29,13 +26,12 @@
   <h4>Choose a note from each column to make a melody.</h4>
   <div id="home-explain">
     <pre>
-      Each column represents a quarter note.
-      Add or delete notes with the add and delete buttons. 
-      Click the play button to play your melody and
-      the stop button to stop your melody.
-      Click the generate melody button to create a new melody using 
-      Google's open source machine learning project Magenta.
-      Sign up to save your generated melodies.
+      Each column represents a quarter note. Add or delete notes with the add and delete buttons. 
+      Use the play button to play your melody and use the stop button to stop your melody. Use the 
+      generate melody button to generate a new melody using Google's open source machine learning 
+      project Magenta. Magenta will use the default melody that appears in the Generated melody box 
+      if none of the notes are selected. Sign up to save your generated melodies. 
+
     </pre>
   </div>
   <div id="show-pitches"><!-- display react radio buttons here --></div>

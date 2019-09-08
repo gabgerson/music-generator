@@ -35,6 +35,8 @@ def index():
 
     return render_template("homepage.html")
 
+
+
     
 @app.route("/sign-up", methods=["GET"])
 def sign_up():

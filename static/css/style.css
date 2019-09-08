@@ -3,9 +3,7 @@
 
 body {
     background-color: #ffc0ba;
-    
-/*     background-image: linear-gradient(to right,#dcc7cf ,#e8bdcf, #cccccc); */
-    
+    margin-bottom: 50px;
     font-family: "Nanum Gothic"
 }
 
@@ -119,6 +117,7 @@ canvas {
 
 .note-display {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     margin: 30px 0px 0px 16px;
     font-size: 1.25em;
@@ -182,11 +181,7 @@ canvas {
 }
 
 
-p {
-    display: flex;
-    justify-content: center;
 
-}
 
 img {
   width: 50px
@@ -221,3 +216,15 @@ img {
 
 }
 
+pre {
+    font-family: "Roboto Mono"
+}
+
+#about {
+    text-align: center;
+    margin: 100px 50px;
+}
+
+p {
+    text-align: center
+}

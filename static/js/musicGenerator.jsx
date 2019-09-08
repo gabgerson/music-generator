@@ -249,6 +249,7 @@ class ControlButtons extends React.Component {
 
             savedMelody = JSON.stringify(savedMelody);
 
+
             if (this.state.sample === undefined) {
                 alert("Please generate a melody.");
             } else if (title === "") {
@@ -257,7 +258,7 @@ class ControlButtons extends React.Component {
             $.post( url, {
               "savedMelody": savedMelody,
               "title": title
-            });}
+            }); alert("Melody Saved")}
           }
 
 
@@ -274,7 +275,7 @@ class ControlButtons extends React.Component {
                <input type="text" id="title" value={this.state.title} onChange={this.getGeneratedMelodyTitle} required name="title"/> 
                </label>              
                <label htmlFor="save-button">
-                <button id="save" type="button" onClick={this.saveToDatabase}><i class="fas fa-save"></i> Save</button>
+                <button id="save" type="button" onClick={this.saveToDatabase}><i className="fas fa-save"></i> Save</button>
                </label> 
               </form>
             </div>
@@ -301,7 +302,7 @@ class ControlButtons extends React.Component {
                 type="button" 
                 onClick={this.generateMelody}><i className="fas fa-redo"></i> Generate Melody</button>
               </label>
-              <span id="loader" hidden={this.state.isNotLoading}>Loading...<img src="/static/img/quarter_note-svg.gif" alt=""/></span>
+              <span id="loader" hidden={this.state.isNotLoading}>Loading...<img src="/static/img/quarter_note.gif" alt=""/></span>
               {saveForm}
             </div>
         )

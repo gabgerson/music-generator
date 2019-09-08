@@ -8,12 +8,12 @@ window.userMelody = undefined;
 //seed melody
 const defaultSeed = {"notes":[
     {"endTime":1,"pitch":"55","startTime":0},
-    {"endTime":2,"pitch":"48","startTime":1},
+    {"endTime":2,"pitch":"50","startTime":1},
     {"endTime":3,"pitch":"57","startTime":2},
     {"endTime":4,"pitch":"53","startTime":3},
     {"endTime":5,"pitch":"52","startTime":4},
     {"endTime":6,"pitch":"48","startTime":5},
-    {"endTime":7,"pitch":"50","startTime":6},
+    {"endTime":7,"pitch":"53","startTime":6},
     {"endTime":8,"pitch":"55","startTime":7}],
     "totalTime":8}
 
@@ -32,8 +32,7 @@ let visualizer = new mm.PianoRollCanvasVisualizer(defaultSeed, canvasPianoRoll)
 //make visualzer redraw pitches while melody is playing and instantiate player
 // got this from Hello Magenta demo on glitch
 let pianoRollPlayer = new mm.Player(false,{
-    run: (note) => visualizer.redraw(note),
-    stop: () => {console.log('done');}
+    run: (note) => visualizer.redraw(note)
   });
   
 //replace seed canvas piano roll with user melody piano canvas roll   

@@ -1,5 +1,18 @@
 {% extends "base.html" %}
 
 {% block body %}
+<div id="about">
+  <pre>
+    Melodia is an app that invites the user to create a melody and use Google's open source machine learning 
+    project Magenta to generate new melodies. Melodia uses Magenta's music RNN which continues the users melody
+    in a similar style. Each column represents a quarter note. Users can add or delete notes with the add and 
+    delete buttons. Use the play button to play a melody and use the stop button to stop a melody. Use the 
+    generate melody button to generate a new melody. Magenta will use the default melody that appears in the Generated 
+    melody box if none of the notes are selected. Generated melodies can be saved by signing up. 
+  
+    This website was created by <a href="mailto:gabgerson1@gmail.com">Gaby</a> in 2019. The code is <a href="https://github.com/gabgerson/music-generator">here</a>.
+  </pre>
+</div>
+
 
 {% endblock %}
