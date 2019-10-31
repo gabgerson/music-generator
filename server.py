@@ -120,10 +120,12 @@ def save_process():
         db.session.commit()
     return redirect("/")
 
+#add show_about_page route here
 @app.route("/about")
 def show_about_page():
 
     return render_template("about.html")
+
 
 if __name__ == "__main__":
 
